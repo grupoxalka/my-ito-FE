@@ -4,7 +4,54 @@
 
 @theme {
     /* Custom Colors */
+    --color-radiance-50: #EDFAFF;
+    --color-radiance-100: #D6F2FF;
+    --color-radiance-200: #B5EAFF;
+    --color-radiance-300: #83DFFF;
+    --color-radiance-400: #48CBFF;
+    --color-radiance-500: #1EACFF;
+    --color-radiance-600: #068EFF;
+    --color-radiance-700: #007AFF;
+    --color-radiance-800: #085DC5;
     --color-radiance-900: #0D519B;
+    --color-radiance-950: #0E315D;
+
+    --color-tuna-50: #F6F6F9;
+    --color-tuna-100: #ECECF2;
+    --color-tuna-200: #D6D6E1;
+    --color-tuna-300: #B1B2C8;
+    --color-tuna-400: #8789A9;
+    --color-tuna-500: #686A8F;
+    --color-tuna-600: #535476;
+    --color-tuna-700: #444460;
+    --color-tuna-800: #3B3B51;
+    --color-tuna-900: #303040;
+    --color-tuna-950: #23232E;
+
+    --color-persian-red-50: #FFE1E3;
+    --color-persian-red-100: #FEE4E6;
+    --color-persian-red-200: #FFC9CC;
+    --color-persian-red-300: #FEA3A8;
+    --color-persian-red-400: #FB6E76;
+    --color-persian-red-500: #F3404A;
+    --color-persian-red-600: #DA1E28;
+    --color-persian-red-700: #BD1821;
+    --color-persian-red-800: #9C181F;
+    --color-persian-red-900: #811B20;
+    --color-persian-red-950: #46090C;
+
+    --color-nevada-50: #F4F6F7;
+    --color-nevada-100: #E4E8E9;
+    --color-nevada-200: #CBD2D6;
+    --color-nevada-300: #A7B2B9;
+    --color-nevada-400: #7C8A94;
+    --color-nevada-500: #5E6C76;
+    --color-nevada-600: #535E67;
+    --color-nevada-700: #474F57;
+    --color-nevada-800: #3F454B;
+    --color-nevada-900: #383D41;
+    --color-nevada-950: #22262A;
+
 
     /* Custom Fonts */
     --font-poppins: 'Poppins', sans-serif;
