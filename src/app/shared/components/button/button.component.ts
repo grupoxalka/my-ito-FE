@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -8,14 +8,5 @@ import { Component, Input, Output } from '@angular/core';
 })
 export class ButtonComponent {
   @Input() buttonText: string = "";
-  private _isDisabled: boolean = false;
-
-  @Input()
-  set isDisabled(value: string) {
-    this._isDisabled = value === 'true';
-  }
-
-  get isDisabled(): boolean {
-    return this._isDisabled;
-  }
+  @Input() isDisabled: boolean = false;
 }
