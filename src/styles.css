@@ -1,59 +1,58 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 @import "tailwindcss";
 
 @theme {
-    /* Custom Colors */
-    --color-radiance-50: #EDFAFF;
-    --color-radiance-100: #D6F2FF;
-    --color-radiance-200: #B5EAFF;
-    --color-radiance-300: #83DFFF;
-    --color-radiance-400: #48CBFF;
-    --color-radiance-500: #1EACFF;
-    --color-radiance-600: #068EFF;
-    --color-radiance-700: #007AFF;
-    --color-radiance-800: #085DC5;
-    --color-radiance-900: #0D519B;
-    --color-radiance-950: #0E315D;
+  /* Custom Colors */
+  --color-radiance-50: #edfaff;
+  --color-radiance-100: #d6f2ff;
+  --color-radiance-200: #b5eaff;
+  --color-radiance-300: #83dfff;
+  --color-radiance-400: #48cbff;
+  --color-radiance-500: #1eacff;
+  --color-radiance-600: #068eff;
+  --color-radiance-700: #007aff;
+  --color-radiance-800: #085dc5;
+  --color-radiance-900: #0d519b;
+  --color-radiance-950: #0e315d;
 
-    --color-tuna-50: #F6F6F9;
-    --color-tuna-100: #ECECF2;
-    --color-tuna-200: #D6D6E1;
-    --color-tuna-300: #B1B2C8;
-    --color-tuna-400: #8789A9;
-    --color-tuna-500: #686A8F;
-    --color-tuna-600: #535476;
-    --color-tuna-700: #444460;
-    --color-tuna-800: #3B3B51;
-    --color-tuna-900: #303040;
-    --color-tuna-950: #23232E;
+  --color-tuna-50: #f6f6f9;
+  --color-tuna-100: #ececf2;
+  --color-tuna-200: #d6d6e1;
+  --color-tuna-300: #b1b2c8;
+  --color-tuna-400: #8789a9;
+  --color-tuna-500: #686a8f;
+  --color-tuna-600: #535476;
+  --color-tuna-700: #444460;
+  --color-tuna-800: #3b3b51;
+  --color-tuna-900: #303040;
+  --color-tuna-950: #23232e;
 
-    --color-persian-red-50: #FFE1E3;
-    --color-persian-red-100: #FEE4E6;
-    --color-persian-red-200: #FFC9CC;
-    --color-persian-red-300: #FEA3A8;
-    --color-persian-red-400: #FB6E76;
-    --color-persian-red-500: #F3404A;
-    --color-persian-red-600: #DA1E28;
-    --color-persian-red-700: #BD1821;
-    --color-persian-red-800: #9C181F;
-    --color-persian-red-900: #811B20;
-    --color-persian-red-950: #46090C;
+  --color-persian-red-50: #ffe1e3;
+  --color-persian-red-100: #fee4e6;
+  --color-persian-red-200: #ffc9cc;
+  --color-persian-red-300: #fea3a8;
+  --color-persian-red-400: #fb6e76;
+  --color-persian-red-500: #f3404a;
+  --color-persian-red-600: #da1e28;
+  --color-persian-red-700: #bd1821;
+  --color-persian-red-800: #9c181f;
+  --color-persian-red-900: #811b20;
+  --color-persian-red-950: #46090c;
 
-    --color-nevada-50: #F4F6F7;
-    --color-nevada-100: #E4E8E9;
-    --color-nevada-200: #CBD2D6;
-    --color-nevada-300: #A7B2B9;
-    --color-nevada-400: #7C8A94;
-    --color-nevada-500: #5E6C76;
-    --color-nevada-600: #535E67;
-    --color-nevada-700: #474F57;
-    --color-nevada-800: #3F454B;
-    --color-nevada-900: #383D41;
-    --color-nevada-950: #22262A;
+  --color-nevada-50: #f4f6f7;
+  --color-nevada-100: #e4e8e9;
+  --color-nevada-200: #cbd2d6;
+  --color-nevada-300: #a7b2b9;
+  --color-nevada-400: #7c8a94;
+  --color-nevada-500: #5e6c76;
+  --color-nevada-600: #535e67;
+  --color-nevada-700: #474f57;
+  --color-nevada-800: #3f454b;
+  --color-nevada-900: #383d41;
+  --color-nevada-950: #22262a;
 
-
-    /* Custom Fonts */
-    --font-poppins: 'Poppins', sans-serif;
-    --font-roboto: 'Roboto', sans-serif;
+  /* Custom Fonts */
+  --font-poppins: "Poppins", sans-serif;
+  --font-roboto: "Roboto", sans-serif;
 }
