@@ -1,10 +1,10 @@
 <div class="font-roboto">
-    <label *ngIf="labelText" [ngClass]=" {'text-persian-red-500': hasError,
+    <label *ngIf="inputLabel" [ngClass]=" {'text-persian-red-500': hasError,
                   'text-radiance-950': !hasError } " [for]="inputId">
-        {{ labelText }}
+        {{ inputLabel }}
     </label>
 
-    <input [type]="inputType" [placeholder]="placeholderText" [name]="inputName" [id]="inputId" [required]="isRequired"
+    <input [type]="inputType" [placeholder]="inputPlaceholder" [name]="inputName" [id]="inputId" [required]="isRequired"
         [disabled]="isDisabled" [(ngModel)]="inputValue" class="
             border-2
             bg-radiance-50

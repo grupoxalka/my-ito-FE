@@ -10,12 +10,12 @@ import { FormsModule } from '@angular/forms'
 })
 export class InputComponent {
   @Input() inputType: string = 'text';
-  @Input() placeholderText: string = 'Escribe aquí';
+  @Input() inputPlaceholder: string = 'Escribe aquí';
   @Input() inputName: string = '';
   @Input() inputId: string = '';
   @Input() isRequired: boolean = false;
   @Input() isDisabled: boolean = false;
-  @Input() labelText: string = '';
+  @Input() inputLabel: string = '';
 
   hasError: boolean = false;
   errorMessage: string = '';
