@@ -4,7 +4,7 @@ import { InputComponent } from './shared/components/input/input.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, InputComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

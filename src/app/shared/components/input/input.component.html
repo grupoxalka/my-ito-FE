@@ -1,23 +1,22 @@
 <div class="font-roboto">
-    <form>
+    <label *ngIf="labelText" [ngClass]=" {'text-persian-red-500': hasError,
+                  'text-radiance-950': !hasError } " [for]="inputId">
+        {{ labelText }}
+    </label>
 
-        <label *ngIf="labelText" [for]="inputId" class="text-radiance-950">
-            {{ labelText }}
-        </label>
-
-        <input [type]="inputType" [placeholder]="placeholderText" [name]="inputName" [id]="inputId"
-            [required]="isRequired" [disabled]="isDisabled" [ngClass]="{'
-        bg-tuna-50 text-tuna-400 placeholder-tuna-400 cursor-not-allowed': isDisabled,
-        }" class="
-            bg-radiance-50 
-            border-radiance-200/50 
-            text-radiance-950 
-            placeholder-radiance-950
+    <input [type]="inputType" [placeholder]="placeholderText" [name]="inputName" [id]="inputId" [required]="isRequired"
+        [disabled]="isDisabled" [(ngModel)]="inputValue" class="
             border-2
-            outline-radiance-950/20
+            bg-radiance-50
             rounded-md 
             px-3 py-2 
             text-center 
-            w-full">
-    </form>
+            w-full" [ngClass]="{'
+        bg-tuna-50 text-tuna-400 placeholder-tuna-400 cursor-not-allowed': isDisabled,
+        'outline-persian-red-500 border-persian-red-200 text-persian-red-500': hasError,
+        'outline-radiance-950/20 border-radiance-200/50 text-radiance-950': !hasError
+        }" (input)="validateInput()" />
+    <p *ngIf="hasError && errorMessage" class="text-m text-persian-red-500">
+        {{ errorMessage }}
+    </p>
 </div>
