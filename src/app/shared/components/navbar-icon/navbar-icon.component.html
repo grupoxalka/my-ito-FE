@@ -1,0 +1,18 @@
+<li class="flex items-center gap-2 uppercase relative font-medium ">
+    <div class=" absolute h-full  w-0.5 bg-radiance-800 opacity-0" [ngClass]="{
+        'opacity-100': isActive
+    }"></div>
+    <a [routerLink]="link" class="flex items-center justify-center gap-2.5 px-4 py-2 h-12 lg:p-0 lg:w-full group">
+        <div class="bg-nevada-50 rounded-full size-8 flex items-center" [ngClass]="{'icon-shadow ' : isActive}">
+            <img src="assets/icons/icon-{{icon}}.svg" [alt]='icon' [ngClass]="{'icon-filter ': isActive}">
+
+        </div>
+        <span class="lg:hidden">{{text}}</span>
+
+        <!-- Tooltip -->
+        <span
+            class="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-3 py-1 rounded-lg bg-white text-radiance-800 invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-opacity whitespace-nowrap z-10 shadow-md shadow-nevada-300   ">
+            {{ text }}
+        </span>
+    </a>
+</li>
