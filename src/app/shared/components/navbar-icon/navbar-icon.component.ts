@@ -12,5 +12,5 @@ export class NavbarIconComponent {
   @Input() icon: string = '';
   @Input() text: string = '';
   @Input() isActive: boolean = false;
-  @Input() link: string = '';
+  @Input() path: string = '';
 }

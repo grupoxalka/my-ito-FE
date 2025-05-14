@@ -2,7 +2,7 @@
     <div class=" absolute h-full  w-0.5 bg-radiance-800 opacity-0" [ngClass]="{
         'opacity-100': isActive
     }"></div>
-    <a [routerLink]="link" class="flex items-center justify-center gap-2.5 px-4 py-2 h-12 lg:p-0 lg:w-full group">
+    <a [routerLink]="path" class="flex items-center justify-center gap-2.5 px-4 py-2 h-12 lg:p-0 lg:w-full group">
         <div class="bg-nevada-50 rounded-full size-8 flex items-center" [ngClass]="{'icon-shadow ' : isActive}">
             <img src="assets/icons/icon-{{icon}}.svg" [alt]='icon' [ngClass]="{'icon-filter ': isActive}">
 
