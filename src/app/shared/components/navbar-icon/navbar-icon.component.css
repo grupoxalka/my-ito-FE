@@ -1,0 +1,6 @@
+.icon-filter {
+  filter: brightness(0) saturate(100%) invert(18%) sepia(98%) saturate(2171%) hue-rotate(200deg) brightness(88%) contrast(90%);
+}
+.icon-shadow {
+  filter: drop-shadow(0px 0px 10px var( --color-radiance-800, #085dc5));
+}
