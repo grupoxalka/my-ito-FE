@@ -7,6 +7,7 @@ import { ButtonComponent } from './shared/components/button/button.component';
   imports: [RouterOutlet, ButtonComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
+
 })
 export class AppComponent {
   title = 'my-ito-FE';
