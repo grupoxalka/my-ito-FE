@@ -4,9 +4,9 @@ import { InputComponent } from './shared/components/input/input.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, InputComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  standalone: true,
+  imports: [RouterOutlet],
+  template: '<router-outlet></router-outlet>'
 })
 export class AppComponent {
   title = 'my-ito-FE';

@@ -1,1 +1,54 @@
-<p>login works!</p>
+<div class="flex h-screen w-screen overflow-hidden">
+  <div class="hidden lg:flex w-1/2 bg-[url('/assets/login-bg.svg')] bg-center bg-cover items-center justify-center relative">
+    <div class="absolute top-0 pt-28 text-center px-8">
+      <h1 class="text-3xl font-bold text-blue-900">Bienvenido a MyIto CRM 🦉</h1>
+      <p class="mt-4 text-base font-light text-blue-900">
+        Gestionando el futuro del Tecnologico Nacional de México
+      </p>
+    </div>
+    <img src="assets/login-pico-orizaba.svg" alt="Pico de Orizaba" class="relative bottom-[-260px]" />
+  </div>
+
+  <div class="flex w-full lg:w-1/2 flex-col items-center justify-center bg-white shadow-lg px-6 gap-8">
+    <img src="/assets/logo-tecnm.svg" alt="TECNM Logo" class="w-16 h-16" />
+    <h2 class="text-2xl font-semibold text-gray-800">Inicia Sesión</h2>
+
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)"
+          class="w-full max-w-sm flex flex-col gap-4">
+
+      <app-input
+        name="email"
+        id="email"
+        label="Correo electrónico"
+        type="email"
+        placeholder="Ingresa tu correo electrónico"
+        [(ngModel)]="loginModel.email"
+      ></app-input>
+
+      <app-input
+        name="password"
+        id="password"
+        label="Contraseña"
+        type="password"
+        placeholder="Ingresa tu contraseña"
+        [(ngModel)]="loginModel.password"
+      ></app-input>
+
+      <app-button
+        [buttonText]="'Inicia Sesión'"
+        [isDisabled]="!loginForm.valid"
+      ></app-button>
+    </form>
+
+    <div class="w-full max-w-sm relative text-center py-2">
+      <span class="bg-white px-2 text-sm text-gray-500 relative z-10">
+        ¿Olvidaste tu contraseña?
+      </span>
+      <div class="absolute inset-0 top-1/2 bg-gray-300 h-px"></div>
+    </div>
+
+    <a routerLink="/recoverypassword" class="text-sm text-blue-600 hover:underline">
+      Solicitar recuperación
+    </a>
+  </div>
+</div>
