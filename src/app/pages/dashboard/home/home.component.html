@@ -1,1 +1,17 @@
-<p>home works!</p>
+<app-dashboard-section title="usuarios en el sistema" subtitle="por semestre">
+    <app-owl-cards user="student"></app-owl-cards>
+    <app-owl-cards user="professor"></app-owl-cards>
+    <app-owl-cards user="administrative"></app-owl-cards>
+    <span class="w-35 sm:hidden"></span>
+</app-dashboard-section>
+<div class="w-full flex flex-col gap-2 items-end lg:flex-row">
+    <app-dashboard-section title="herramientas rápidas" subtitle="ultimas herramientas utiilizadas">
+        <app-tool-cards [alone]="true"></app-tool-cards>
+    </app-dashboard-section>
+
+    <app-dashboard-section>
+        <app-tool-cards></app-tool-cards>
+        <app-tool-cards></app-tool-cards>
+    </app-dashboard-section>
+
+</div>

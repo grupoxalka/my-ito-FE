@@ -55,4 +55,13 @@
   /* Custom Fonts */
   --font-poppins: "Poppins", sans-serif;
   --font-roboto: "Roboto", sans-serif;
+
+  /* Custom breakpoints */
+  --breakpoint-xs: 364px;
+  --breakpoint-md: 1024px;
+  --breakpoint-lg: 1440px;
+  --breakpoint-xl: 1920px;
+
+  /* Custom Shadows */
+  --shadow-custom: 0 1px 6px 0 rgba(167, 178, 185, 0.9);
 }
