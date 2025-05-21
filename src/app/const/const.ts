@@ -21,3 +21,24 @@ export const USER_TYPES = [
         COUNTER: 9999
     },
 ]
+
+export const LAST_TOOLS = [
+    {
+        KEY: 1,
+        PATH: 'add-announcement',
+        TITLE: 'crear aviso',
+        SUBTITLE: 'estudiantes'
+    },
+    {
+        KEY: 2,
+        PATH: 'add-report',
+        TITLE: 'reporte',
+        SUBTITLE: 'descargar'
+    },
+    {
+        KEY: 3,
+        PATH: 'add-user',
+        TITLE: 'añadir',
+        SUBTITLE: 'usuario'
+    },
+]

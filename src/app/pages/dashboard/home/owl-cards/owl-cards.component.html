@@ -3,7 +3,7 @@
         p-4 flex flex-col items-center justify-center
         text-center text-tuna-950 uppercase
         ">
-  <img [src]="'assets/owl-' + user + '.svg'" [alt]="altText" class="mb-2.5">
+  <img [src]="`assets/owl-${user}.svg`" [alt]="altText" class="mb-2.5">
   <h1 class="font-semibold text-3xl"> {{ counter }} </h1>
-  <p class="font-light font-roboto size text-sm"> {{ userLabel }} </p>
+  <p class="font-light font-roboto size text-sm"> {{ label }} </p>
 </div>

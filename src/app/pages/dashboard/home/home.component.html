@@ -6,12 +6,12 @@
 </app-dashboard-section>
 <div class="w-full flex flex-col gap-2 items-end lg:flex-row">
     <app-dashboard-section title="herramientas rápidas" subtitle="ultimas herramientas utiilizadas">
-        <app-tool-cards [alone]="true"></app-tool-cards>
+        <app-tool-cards [alone]="true" [button]="1"></app-tool-cards>
     </app-dashboard-section>
 
     <app-dashboard-section>
-        <app-tool-cards></app-tool-cards>
-        <app-tool-cards></app-tool-cards>
+        <app-tool-cards [button]="2"></app-tool-cards>
+        <app-tool-cards [button]="3"></app-tool-cards>
     </app-dashboard-section>
 
 </div>

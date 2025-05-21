@@ -1,11 +1,11 @@
-<div [ngClass]="{'shadow-none p-0': alone}" class="shadow-custom py-6 px-4 rounded-md w-full min-w-3xs flex gap-2.5 justify-center items-center
+<button type="button" [ngClass]="{'shadow-none p-0': alone}" class="shadow-custom py-6 px-4 rounded-md w-full min-w-3xs flex gap-2.5 justify-center items-center
 lg:min-w-2xs
 ">
-    <img src="/assets/tool-add-user.svg" alt="">
+    <img [src]="`/assets/tool-${path}.svg`" alt="">
     <span class="text-center">
         <h1 class=" font-poppins font-semibold text-xl uppercase text-tuna-950
-                    w-full"> Añadir</h1>
+                    w-full"> {{ title }} </h1>
         <h2 class=" font-roboto font-light text-md uppercase text-tuna-950
-                    w-full"> Usuario</h2>
+                    w-full"> {{ subtitle }} </h2>
     </span>
-</div>
+</button>

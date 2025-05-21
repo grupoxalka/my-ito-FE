@@ -11,27 +11,22 @@ import { USER_TYPES } from '../../../../const/const';
 export class OwlCardsComponent {
   @Input() user: string = '';
 
-  @Input() counters: { [key: string]: number } = Object.fromEntries(
-    USER_TYPES.map(type => [type.KEY, type.COUNTER])
-  );
+  get userType() {
+    return USER_TYPES.find(type => type.KEY === this.user);
+  }
 
-  labels: { [key: string]: string } = Object.fromEntries(
-    USER_TYPES.map(type => [type.KEY, type.LABEL])
-  );
-
-  get userLabel(): string {
-    return this.labels[this.user] || this.user;
+  get label(): string {
+    return this.userType?.LABEL || this.user;
   }
 
   get counter(): number {
-    return this.counters[this.user] ?? 0;
+    return this.userType?.COUNTER ?? 0;
   }
 
   get altText(): string {
-    const label = this.labels[this.user] || '';
-
-    const base = label.endsWith('res') ? label.slice(0, -2) : label.slice(0, -1);
-    return `Búho ${base}`;
+    const label = this.userType?.LABEL || '';
+    const occupation = label.endsWith('res') ? label.slice(0, -2) : label.slice(0, -1);
+    return `Búho ${occupation}`;
   }
 }
 
