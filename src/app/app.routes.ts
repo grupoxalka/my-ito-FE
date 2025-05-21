@@ -12,10 +12,10 @@ export const routes: Routes = [
         children:
             [
                 { path: '', redirectTo: 'home', pathMatch: 'full' },
-                { path: 'home', component: HomeComponent, title: 'dashboard' },
-                { path: 'users', component: UsersComponent, title: 'users' },
-                { path: 'announcements', component: AnnouncementsComponent, title: 'announcements' },
+                { path: 'home', component: HomeComponent, title: 'Home' },
+                { path: 'users', component: UsersComponent, title: 'Users' },
+                { path: 'announcements', component: AnnouncementsComponent, title: 'Announcements' },
             ]
     },
-    { path: '**', redirectTo: 'login' }
+    { path: '**', redirectTo: 'Login' }
 ];
