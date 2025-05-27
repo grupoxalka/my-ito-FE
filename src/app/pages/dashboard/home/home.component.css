@@ -1,0 +1,12 @@
+:host {
+  width: 100%;
+  max-width: 1300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 auto;
+
+  @media (min-width: 1024px) {
+    gap: 96px;
+  }
+}

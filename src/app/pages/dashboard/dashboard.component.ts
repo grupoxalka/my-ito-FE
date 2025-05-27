@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { NavbarIconComponent } from "../../shared/components/navbar-icon/navbar-icon.component";
+import { HomeComponent } from './home/home.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterOutlet, RouterLink, NgClass, NavbarIconComponent],
+  imports: [RouterOutlet, RouterLink, NgClass, NavbarIconComponent, HomeComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })

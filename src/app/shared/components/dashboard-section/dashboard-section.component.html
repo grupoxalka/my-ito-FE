@@ -1,0 +1,13 @@
+<h1 class=" font-poppins font-semibold text-xl uppercase text-tuna-950
+            w-full"> {{ title }} </h1>
+<h2 class=" font-roboto font-light text-md uppercase text-tuna-950
+            w-full"> {{ subtitle }} </h2>
+<div class="w-full h-full bg-white rounded-md shadow-custom px-4 py-6
+            flex gap-8 flex-wrap justify-center
+            sm:px-24 sm:flex-nowrap">
+    @if (description) {
+    <p class="font-poppins font-semibold text-xl uppercase text-tuna-950
+            w-full pb-6 pt-2 px-2 border-b border-tuna-950"> {{ description }} </p>
+    }
+    <ng-content></ng-content>
+</div>
