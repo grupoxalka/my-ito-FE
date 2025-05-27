@@ -17,5 +17,5 @@ export const routes: Routes = [
                 { path: 'announcements', component: AnnouncementsComponent, title: 'Announcements' },
             ]
     },
-    { path: '**', redirectTo: 'Login' }
+    { path: '**', redirectTo: 'login' }
 ];
