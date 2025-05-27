@@ -1,0 +1,33 @@
+
+::ng-deep thead {
+  background: #D6F2FF33 !important;
+  color: #fff !important;
+  text-transform: uppercase !important;
+}
+
+::ng-deep th {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: #000 !important;
+  text-align: center !important;
+}
+
+::ng-deep td {
+  font-size: 12px !important;
+  text-align: center !important;
+}
+
+::ng-deep .mat-mdc-paginator-outer-container button{
+  background-color: rgb(255, 255, 255) !important;
+  color: white !important;
+  fill: white !important;
+  border-radius: 0 !important;
+  border: 0.5px solid var(--Nevada-50, #F4F6F7);
+
+}
+
+::ng-deep .mat-mdc-paginator-outer-container {
+  background-color: #F4F6F7 ;
+  color: blue;
+}
+
