@@ -9,7 +9,7 @@ import { MODAL_CONTENT } from '../../../const/const';
   styleUrl: './modal.component.css'
 })
 export class ModalComponent {
-  @Input() type: number = NaN;
+  @Input() type: number = 1;
 
   get modalType() {
     return MODAL_CONTENT.find(type => type.ID === this.type);
