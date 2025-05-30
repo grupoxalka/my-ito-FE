@@ -14,28 +14,29 @@ export class InputComponent {
   @Input() placeholder: string = 'Escribe aquí';
   @Input() name: string = '';
   @Input() id: string = '';
-  @Input() required: boolean = false;
+  @Input() required: boolean = false; 
   @Input() disabled: boolean = false;
   @Input() label: string = '';
-
+  @Input() model!: string;
+  
   hasError: boolean = false;
   errorMessage: string = '';
   value: string = '';
 
-  onInput(): void {
-    let isInvalid = false;
+  onInput(): void {  
+    let isInvalid = false; 
 
     switch (this.type) {
-      case INPUT_TYPES.MAIL:
-        this.value = this.value.replace(/\s+/g, '');
+      case INPUT_TYPES.MAIL: 
+        this.value = this.value.replace(/\s+/g, '');  
 
-        const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value);
-        if (!correoValido || this.value.length > 32) {
-          isInvalid = true;
+        const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value); 
+        if (!correoValido || this.value.length > 32) { 
+          isInvalid = true; 
         }
         break;
 
-      case INPUT_TYPES.TEL:
+      case INPUT_TYPES.TEL: //
         this.value = this.value.replace(/\D/g, '');
 
         if (this.value.length === 10) {
@@ -45,22 +46,22 @@ export class InputComponent {
         }
         break;
 
-      case INPUT_TYPES.PASSWORD:
-        this.value = this.value.replace(/\s+/g, '');
+      case INPUT_TYPES.PASSWORD: 
+        this.value = this.value.replace(/\s+/g, ''); 
 
-        if (this.value.length < 8 || this.value.length > 64) {
-          isInvalid = true;
+        if (this.value.length < 8 || this.value.length > 64) { 
+          isInvalid = true; 
         }
         break;
 
       default:
-        if (this.value.length > 72) {
+        if (this.value.length > 72) {  
           isInvalid = true;
         }
         break;
     }
 
-    this.hasError = isInvalid;
+    this.hasError = isInvalid; //
     this.errorMessage = isInvalid ? 'Revise la información' : '';
   }
 }

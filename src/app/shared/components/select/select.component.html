@@ -1,14 +1,5 @@
-<label *ngIf="label" >{{ label }}</label>
-<select
-  [name]="name"
-  [ngModel]="model"
-  
-  (ngModelChange)="onChange($event)"
-  class="w-full h-9 border border-blue-200 bg-blue-50 rounded-md px-3 text-base text-center"
->
-  <option value="">Selecciona uno</option>
-  <option *ngFor="let opt of options" [value]="opt.value">
-    {{ opt.label }}
-  </option>
+<label class="block text-sm font-medium mb-1">{{ label }}</label>
+<select [(ngModel)]="model" class="w-full border p-2 rounded bg-blue-50">
+  <option value="">{{ placeholder }}</option>
+  <option *ngFor="let option of options" [value]="option.value">{{ option.label }}</option>
 </select>
-  

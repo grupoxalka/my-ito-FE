@@ -9,8 +9,8 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './textarea.component.html'
 })
 export class TextareaComponent {
-  @Input() label = '';
-  @Input() name  = '';
-  @Input() rows  = 5;
-  @Input() model = '';
+  @Input() label!: string;
+  @Input() placeholder = '';
+  @Input() helpText?: string;
+  @Input() model!: string;
 }

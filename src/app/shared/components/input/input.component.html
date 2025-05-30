@@ -1,10 +1,10 @@
 <div class="font-roboto">
-    <label *ngIf="label" class="text-persian-red-500" [ngClass]=" {'text-radiance-950': !hasError } " [for]="id">
+    <label *ngIf="label" class="text-persian-red-500" [ngClass]=" {'text-radiance-950': !hasError } " [for]="id"> 
         {{ label }}
     </label>
 
-    <input [type]="type" [placeholder]="placeholder" [name]="name" [id]="id" [required]="required" [disabled]="disabled"
-        [(ngModel)]="value" class="
+    <input [type]="type" [placeholder]="placeholder" [name]="name" [id]="id" [required]="required" [disabled]="disabled" 
+        [value]="model" class=" 
             border-2
             bg-radiance-50
             rounded-md 
@@ -18,4 +18,4 @@
     <p *ngIf="hasError && errorMessage" class="text-m text-persian-red-500">
         {{ errorMessage }}
     </p>
-</div>
+</div> 

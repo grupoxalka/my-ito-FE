@@ -31,10 +31,10 @@
         <div
           class="
             flex-none h-20
-            w-full          <!-- ancho completo del wrapper -->
+            w-full          
             bg-blue-50
             flex justify-end items-center
-            px-12           <!-- mismo padding horizontal que el wrapper -->
+            px-12           >
           "
         >
           <button
@@ -66,7 +66,7 @@
           <app-select
             label="Dirigido a:"
             name="audience"
-            [(model)]="announcement.audience"
+            [(ngModel)]="announcement.audience"
             [options]="audienceOptions"
             
           ></app-select>
@@ -83,7 +83,7 @@
           <app-textarea
             label="Mensaje"
             name="message"
-            [rows]="5"
+            rows="5"
             [(ngModel)]="announcement.message"
             
           ></app-textarea>
