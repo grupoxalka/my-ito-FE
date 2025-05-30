@@ -22,7 +22,7 @@ interface Announcement {
     InputComponent,
     SelectComponent,
     TextareaComponent
-    
+
   ],
   templateUrl: './announcements.component.html',
 })

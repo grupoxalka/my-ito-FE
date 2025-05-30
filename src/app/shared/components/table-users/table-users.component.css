@@ -1,0 +1,28 @@
+div {
+  background-color: white;
+  outline: none;
+  overflow-x: auto;
+}
+
+::ng-deep thead {
+  background: #D6F2FF33 !important;
+  text-transform: uppercase !important;
+}
+
+
+.mat-mdc-cell,
+.mat-mdc-header-cell {
+  border: none !important;
+}
+
+th {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+  text-align: center;
+}
+
+td {
+  font-size: 12px;
+  text-align: center;
+}
