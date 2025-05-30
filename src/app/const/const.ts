@@ -42,3 +42,24 @@ export const LAST_TOOLS = [
         SUBTITLE: 'usuario'
     },
 ]
+
+export const MODAL_CONTENT = [
+    {
+        ID: 1,
+        ICON: "delete-warning",
+        ALT_ICON: "Bote de basura",
+        TITLE: "Confirma que deseas eliminar este elemento",
+        ACTION_BUTTON: "Eliminar",
+        CLOSE_BUTTON: "Cancelar",
+        RED_BG: true
+    },
+    {
+        ID: 2,
+        ICON: "exit-warning",
+        ALT_ICON: "Advertencia",
+        TITLE: "Estás a punto de salir sin haber guardado los cambios realizados ¿Deseas continuar?",
+        ACTION_BUTTON: "Volver",
+        CLOSE_BUTTON: "Salir",
+        RED_BG: false
+    }
+]

@@ -1,0 +1,14 @@
+<dialog class="font-poppins text-tuna-900 bg-white shadow-custom
+flex flex-col items-center text-center
+rounded-sm gap-8 py-12 px-8 w-11/12 max-w-[381px] xl:max-w-[500px]" aria-modal="true" role="dialog">
+    <img [src]="`assets/modal-${icon}.svg`" [alt]="altIcon" id="modal-icon">
+    <p class=" text-[28px]/7 font-bold -tracking-tight my-0 -mx-4"> {{title}}
+    </p>
+    <div class="flex flex-row gap-4 font-roboto font-normal text-white w-full">
+        <button class="rounded-md py-2 px-4 cursor-pointer border-none h-9 w-full max-w-[210px] bg-nevada-500"
+            id="close-button"> {{ closeButton }} </button>
+        <button class="rounded-md py-2 px-4 cursor-pointer border-none h-9 w-full max-w-[210px] bg-persian-red-500"
+            [ngClass]="{'bg-radiance-900': actionBG == false }" type="button" id="action-button"> {{ actionButton }}
+        </button>
+    </div>
+</dialog>
