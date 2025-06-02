@@ -18,7 +18,7 @@ interface Announcement {
   imports: [
     CommonModule,
     FormsModule,
-    ButtonComponent,
+    
     InputComponent,
     SelectComponent,
     TextareaComponent

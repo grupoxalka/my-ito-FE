@@ -6,11 +6,14 @@ import { HomeComponent } from './home/home.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterOutlet, RouterLink, NgClass, NavbarIconComponent, HomeComponent],
+  imports: [RouterOutlet, RouterLink, NgClass, NavbarIconComponent, HomeComponent, ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
+
+
 export class DashboardComponent {
+  description: string ='';
   isOpen: boolean = false;
   currentActivePath: string = '';
   backgroundImageURL: string = "bg-[url('/assets/dashboard-bg.svg')]";
