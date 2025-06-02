@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { ModalComponent } from '../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-users',
-  imports: [ModalComponent],
+  imports: [],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
