@@ -21,8 +21,13 @@ interface Announcement {
     ButtonComponent,
     InputComponent,
     SelectComponent,
+<<<<<<< HEAD
   
     
+=======
+    TextareaComponent
+
+>>>>>>> main
   ],
   templateUrl: './announcements.component.html',
 })

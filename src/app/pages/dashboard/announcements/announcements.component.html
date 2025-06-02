@@ -1,16 +1,12 @@
 <div class="relative h-screen flex flex-col">
 
-  <div
-    *ngIf="sent"
-    class="absolute inset-0 bg-white flex flex-col items-center justify-center space-y-8 z-10"
-  >
-   
-  </div>
+    <div *ngIf="sent" class="absolute inset-0 bg-white flex flex-col items-center justify-center space-y-8 z-10">
+
+    </div>
 
 
-  <div *ngIf="!sent" class="flex-1 flex items-center justify-center">
-    <div
-      class="
+    <div *ngIf="!sent" class="flex-1 flex items-center justify-center">
+        <div class="
         w-full
         max-w-lg
         mx-auto
@@ -19,99 +15,75 @@
         shadow-lg
         flex flex-col h-full
         overflow-hidden
-      "
-    >
-      <form
-        #f="ngForm"
-        (ngSubmit)="onSubmit(f)"
-        class="flex flex-col h-full"
-      >
+      ">
+            <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="flex flex-col h-full">
 
-        
-        <div
-          class="
+
+                <div class="
             flex-none h-20
-            w-full          <!-- ancho completo del wrapper -->
+            w-full          
             bg-blue-50
             flex justify-end items-center
-            px-12           <!-- mismo padding horizontal que el wrapper -->
-          "
-        >
-          <button
-            type="button"
-            class="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-500"
-          >
-            <img src="/assets/symbols-save.svg" class="w-4 h-4" />
-            <span>Guardar</span>
-          </button>
-        </div>
+            px-12           
+          ">
+                    <button type="button"
+                        class="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-500">
+                        <img src="/assets/symbols-save.svg" class="w-4 h-4" />
+                        <span>Guardar</span>
+                    </button>
+                </div>
 
-       
-        <section class="flex-1 overflow-auto p-8 space-y-6">
-         
-          <div class="flex items-center gap-12">
-            <img
-              src="/assets/owl.svg"
-              class="w-24 h-24 p-6 bg-blue-50 rounded-full"
-            />
-            <div class="space-y-2">
-              <h1 class="text-2xl font-bold">Crear nuevo anuncio</h1>
-              <p class="text-base">
-                Se llevará a cabo una campaña de comunicación a través de correo electrónico dirigida a todos los usuarios del tipo seleccionado.
-              </p>
-            </div>
-          </div>
 
-         
-          <app-select
-            label="Dirigido a:"
-            name="audience"
-            [(model)]="announcement.audience"
-            [options]="audienceOptions"
-            
-          ></app-select>
+                <section class="flex-1 overflow-auto p-8 space-y-6">
 
-          <app-input
-            label="Título"
-            name="title"
-            type="text"
-            placeholder="Registro disponible"
-            [(ngModel)]="announcement.title"
-            
-          ></app-input>
+                    <div class="flex items-center gap-12">
+                        <img src="/assets/owl.svg" class="w-24 h-24 p-6 bg-blue-50 rounded-full" />
+                        <div class="space-y-2">
+                            <h1 class="text-2xl font-bold">Crear nuevo anuncio</h1>
+                            <p class="text-base">
+                                Se llevará a cabo una campaña de comunicación a través de correo electrónico dirigida a
+                                todos los usuarios del tipo seleccionado.
+                            </p>
+                        </div>
+                    </div>
 
+<<<<<<< HEAD
           
         </section>
+=======
+>>>>>>> main
 
-       
-        <div
-          class="
+                    <app-select label="Dirigido a:" name="audience" [(model)]="announcement.audience"
+                        [options]="audienceOptions"></app-select>
+
+                    <app-input label="Título" name="title" type="text" placeholder="Registro disponible"
+                        [(ngModel)]="announcement.title"></app-input>
+
+                    <app-textarea label="Mensaje" name="message" [rows]="5"
+                        [(ngModel)]="announcement.message"></app-textarea>
+                </section>
+
+
+                <div class="
             flex-none h-20
             w-full         
             bg-blue-50
             flex justify-center items-center gap-8
             px-12          
-          "
-        >
-          <button
-            type="button"
-           
-            class="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-500"
-          >
-            <img src="/assets/symbols-cancel.svg" class="w-4 h-4" />
-            <span>Cancelar</span>
-          </button>
-          <button
-            type="submit"
-            [disabled]="!f.form.valid"
-            class="flex items-center gap-2 px-4 py-2 bg-blue-800 text-white rounded-md hover:bg-blue-700"
-          >
-            <img src="/assets/symbols-send.svg" class="w-4 h-4" />
-            <span>Enviar</span>
-          </button>
-        </div>
+          ">
+                    <button type="button"
+                        class="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-500">
+                        <img src="/assets/symbols-cancel.svg" class="w-4 h-4" />
+                        <span>Cancelar</span>
+                    </button>
+                    <button type="submit" [disabled]="!f.form.valid"
+                        class="flex items-center gap-2 px-4 py-2 bg-blue-800 text-white rounded-md hover:bg-blue-700">
+                        <img src="/assets/symbols-send.svg" class="w-4 h-4" />
+                        <span>Enviar</span>
+                    </button>
+                </div>
 
-      </form>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
