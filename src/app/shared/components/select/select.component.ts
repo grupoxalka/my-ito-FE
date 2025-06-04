@@ -13,4 +13,4 @@ export class SelectComponent {
   @Input() placeholder = 'Seleccione una opción';
   @Input() options: { value: string; label: string }[] = [];
   @Input() model!: string;
-}
+}                     
