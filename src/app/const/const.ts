@@ -63,3 +63,6 @@ export const MODAL_CONTENT = [
         RED_BG: false
     }
 ]
+
+export const BORRADOR_STATUS: string = 'BORRADOR';
+export const ENVIADO_STATUS: string = 'ENVIADO';
