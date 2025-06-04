@@ -2,15 +2,15 @@ import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { NavbarIconComponent } from "../../shared/components/navbar-icon/navbar-icon.component";
-import { HomeComponent } from './home/home.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterOutlet, RouterLink, NgClass, NavbarIconComponent, HomeComponent],
+  imports: [RouterOutlet, RouterLink, NgClass, NavbarIconComponent, ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
+  
   isOpen: boolean = false;
   currentActivePath: string = '';
   backgroundImageURL: string = "bg-[url('/assets/dashboard-bg.svg')]";
@@ -24,6 +24,7 @@ export class DashboardComponent {
   ngOnInit(): void {
     this.setCurrentActivePath();
   }
+
   openSidebarMenu() {
     this.isOpen = true;
     document.body.classList.add('overflow-hidden');

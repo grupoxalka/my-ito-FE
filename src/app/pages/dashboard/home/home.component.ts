@@ -6,7 +6,7 @@ import { ToolCardsComponent } from '../../../shared/components/tool-cards/tool-c
   selector: 'app-home',
   imports: [DashboardSectionComponent,
     OwlCardsComponent,
-    ToolCardsComponent
+    ToolCardsComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'

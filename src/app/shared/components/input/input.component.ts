@@ -17,7 +17,7 @@ import { INPUT_TYPES } from '../../../const/const';
   }]
 })
 export class InputComponent implements ControlValueAccessor {
-  @Input() type: string = 'text';
+  @Input() type: string = 'text'; //este puede ser un string 
   @Input() placeholder: string = 'Escribe aquí';
   @Input() name: string = '';
   @Input() id: string = '';

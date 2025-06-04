@@ -1,8 +1,9 @@
-<label class="block text-sm font-medium mb-1">{{ label }}</label>
-<textarea
-  [value]="model"
-  [placeholder]="placeholder"
-  rows="5"
-  class="w-full p-2 rounded border bg-blue-50 resize-none"
+<label *ngIf="label" >{{ label }} </label>
+<textarea 
+[name]="name"
+[(ngModel)]="model"
+[rows]="rows"
+class="w-full border border-blue-200 bg-blue-50 
+         rounded-md px-3 py-2 text-base"
+
 ></textarea>
-<p class="text-xs text-gray-500 mt-1" *ngIf="helpText">{{ helpText }}</p>
