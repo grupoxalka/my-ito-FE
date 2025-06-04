@@ -1,14 +1,26 @@
-<label *ngIf="label" >{{ label }}</label>
+<label *ngIf="label" [class.text-gray-400]="disabled" class="block mb-1 text-sm font-medium">
+  {{ label }}
+  <span *ngIf="required" class="text-red-500">*</span>
+</label>
 <select
   [name]="name"
   [ngModel]="model"
-  
   (ngModelChange)="onChange($event)"
-  class="w-full h-9 border border-blue-200 bg-blue-50 rounded-md px-3 text-base text-center"
+  [disabled]="disabled"
+  (focus)="onFocus()"
+  (blur)="onBlur()"
+  class="w-full h-9 border rounded-md px-3 text-base"
+  [style.background-color]="'#EDFAFF'"
+  [class.border-blue-200]="!error && !isFocused"
+  [class.border-blue-500]="!error && isFocused"
+  [class.border-red-500]="error"
+  [class.bg-gray-100]="disabled"
+  [class.bg-white]="!disabled"
+  [class.text-gray-400]="disabled"
+  [class.cursor-not-allowed]="disabled"
 >
-  <option value="">Selecciona uno</option>
-  <option *ngFor="let opt of options" [value]="opt.value">
+  <option [value]="null">{{ placeholder }}</option>
+  <option *ngFor="let opt of options" [value]="opt.value" [disabled]="opt.disabled">
     {{ opt.label }}
   </option>
 </select>
-  
