@@ -5,11 +5,7 @@ import { NavbarIconComponent } from "../../shared/components/navbar-icon/navbar-
 
 @Component({
   selector: 'app-dashboard',
-<<<<<<< HEAD
-  imports: [RouterOutlet, RouterLink, NgClass, NavbarIconComponent, HomeComponent, ],
-=======
   imports: [RouterOutlet, RouterLink, NgClass, NavbarIconComponent],
->>>>>>> main
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })

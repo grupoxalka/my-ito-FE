@@ -11,8 +11,26 @@ import Announcement from '../../../types/Announcement';
   standalone: true
 })
 export class TableAnnouncementsComponent implements AfterViewInit {
+
+  announcements: Announcement[] = [
+    { titulo: "Clases Inician 1", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
+    { titulo: "Clases Inician 2", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
+    { titulo: "Clases Inician 3", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
+    { titulo: "Clases Inician 4", name: 'Admin Name', fecha: "19-02-24", estatus: 'ENVIADO' },
+    { titulo: "Clases Inician 5", name: 'Admin Name', fecha: "19-02-24", estatus: 'ENVIADO' },
+    { titulo: "Clases Inician 6", name: 'Admin Name', fecha: "19-02-24", estatus: 'ENVIADO' },
+    { titulo: "Clases Inician 7", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
+    { titulo: "Clases Inician 8", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
+    { titulo: "Clases Inician 9", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
+    { titulo: "Clases Inician 10", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
+    { titulo: "Clases Inician 11", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
+    { titulo: "Clases Inician 12", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
+    { titulo: "Clases Inician 13", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
+    { titulo: "Clases Inician 14", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
+  ];
+
   displayedColumns: string[] = ['titulo', 'name', 'fecha', 'estatus', 'acciones'];
-  dataSource = new MatTableDataSource<Announcement>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<Announcement>(this.announcements);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -26,24 +44,17 @@ export class TableAnnouncementsComponent implements AfterViewInit {
     // Implement edit logic here
   }
   onDeleteAction(announcement: Announcement) {
-    console.log('Delete action for:', announcement);
-    // Implement delete logic here
+    this.announcements = this.announcements.filter(a => a !== announcement);
+    this.dataSource.data = this.announcements;
   }
+
+  addAnnouncement(newAnnouncement: Announcement) {
+    this.announcements = [newAnnouncement, ...this.announcements];
+    this.dataSource.data = this.announcements;
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+    }
+  }
+
 }
 
-const ELEMENT_DATA: Announcement[] = [
-  { titulo: "Clases Inician 1", name: 'Admin Name', fecha: "19-02-24", estatus: 'borrador' },
-  { titulo: "Clases Inician 2", name: 'Admin Name', fecha: "19-02-24", estatus: 'borrador' },
-  { titulo: "Clases Inician 3", name: 'Admin Name', fecha: "19-02-24", estatus: 'borrador' },
-  { titulo: "Clases Inician 4", name: 'Admin Name', fecha: "19-02-24", estatus: 'enviado' },
-  { titulo: "Clases Inician 5", name: 'Admin Name', fecha: "19-02-24", estatus: 'enviado' },
-  { titulo: "Clases Inician 6", name: 'Admin Name', fecha: "19-02-24", estatus: 'enviado' },
-  { titulo: "Clases Inician 7", name: 'Admin Name', fecha: "19-02-24", estatus: 'borrador' },
-  { titulo: "Clases Inician 8", name: 'Admin Name', fecha: "19-02-24", estatus: 'borrador' },
-  { titulo: "Clases Inician 9", name: 'Admin Name', fecha: "19-02-24", estatus: 'borrador' },
-  { titulo: "Clases Inician 10", name: 'Admin Name', fecha: "19-02-24", estatus: 'borrador' },
-  { titulo: "Clases Inician 11", name: 'Admin Name', fecha: "19-02-24", estatus: 'borrador' },
-  { titulo: "Clases Inician 12", name: 'Admin Name', fecha: "19-02-24", estatus: 'borrador' },
-  { titulo: "Clases Inician 13", name: 'Admin Name', fecha: "19-02-24", estatus: 'borrador' },
-  { titulo: "Clases Inician 14", name: 'Admin Name', fecha: "19-02-24", estatus: 'borrador' },
-];

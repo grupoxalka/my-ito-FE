@@ -65,3 +65,6 @@
   /* Custom Shadows */
   --shadow-custom: 0 1px 6px 0 rgba(167, 178, 185, 0.9);
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
