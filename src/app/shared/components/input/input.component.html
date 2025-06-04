@@ -1,11 +1,18 @@
 <div class="font-roboto">
-    <label *ngIf="label" class="text-persian-red-500" [ngClass]=" {'text-radiance-950': !hasError } " [for]="id">
+    <label *ngIf="label" class="text-persian-red-500" [ngClass]=" {'text-radiance-950': !hasError } " [for]="id"> 
         {{ label }}
     </label>
 
-    <input [type]="type" [placeholder]="placeholder" [name]="name" [id]="id" [required]="required" [disabled]="disabled"
-        [(ngModel)]="value" class="
-            border-2
+    <input [type]="type"
+         [placeholder]="placeholder"
+         [name]="name"
+         [id]="id"
+         [required]="required"
+         [disabled]="disabled"
+         [value]="value"
+    
+    
+            class=" border-2
             bg-radiance-50
             rounded-md 
             px-3 py-2 
@@ -15,7 +22,8 @@
         'outline-persian-red-500 border-persian-red-200 text-persian-red-500': hasError,
         'outline-radiance-950/20 border-radiance-200/50 text-radiance-950': !hasError
         }" (input)="onInput()" />
+        
     <p *ngIf="hasError && errorMessage" class="text-m text-persian-red-500">
         {{ errorMessage }}
     </p>
-</div>
+</div> 

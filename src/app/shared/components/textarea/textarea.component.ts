@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class TextareaComponent {
   @Input() label = '';
-  @Input() name  = '';
-  @Input() rows  = 5;
+  @Input() name = '';
+  @Input() rows = 5;
   @Input() model = '';
 }

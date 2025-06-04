@@ -5,10 +5,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-select',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
+  imports: [CommonModule, FormsModule],
   templateUrl: './select.component.html'
 })
 export class SelectComponent {
