@@ -9,8 +9,12 @@ import { NavbarIconComponent } from "../../shared/components/navbar-icon/navbar-
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
+
+
 export class DashboardComponent {
+
   
+  description: string ='';
   isOpen: boolean = false;
   currentActivePath: string = '';
   backgroundImageURL: string = "bg-[url('/assets/dashboard-bg.svg')]";
