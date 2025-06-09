@@ -12,6 +12,7 @@ import { NavbarIconComponent } from "../../shared/components/navbar-icon/navbar-
 
 
 export class DashboardComponent {
+
   
   description: string ='';
   isOpen: boolean = false;
