@@ -5,13 +5,14 @@ import { NavbarIconComponent } from "../../shared/components/navbar-icon/navbar-
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterOutlet, RouterLink, NgClass, NavbarIconComponent],
+  imports: [RouterOutlet, RouterLink, NgClass, NavbarIconComponent, ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 
 
 export class DashboardComponent {
+  
   description: string ='';
   isOpen: boolean = false;
   currentActivePath: string = '';
@@ -26,6 +27,7 @@ export class DashboardComponent {
   ngOnInit(): void {
     this.setCurrentActivePath();
   }
+
   openSidebarMenu() {
     this.isOpen = true;
     document.body.classList.add('overflow-hidden');

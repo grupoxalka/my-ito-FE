@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./textarea.component.css']
 })
 export class TextareaComponent {
+<<<<<<< HEAD
   @Input() label: string = '';
   @Input() name: string = '';
   @Input() model: string = ''; // Propiedad para [(ngModel)]
@@ -26,3 +27,10 @@ export class TextareaComponent {
     this.modelChange.emit(value); // Emitir el cambio
   }
 }
+=======
+  @Input() label = '';
+  @Input() name = '';
+  @Input() rows = 5;
+  @Input() model = '';
+}
+>>>>>>> main
