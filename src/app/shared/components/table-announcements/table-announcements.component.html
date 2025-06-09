@@ -1,3 +1,4 @@
+<h2 class="uppercase font-semibold p-3 pb-5 border-b-nevada-600 border-b mb-2.5 text-lg">{{tableName}}</h2>
 <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource">
 
@@ -41,7 +42,12 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-
+    @if (announcements.length === 0) {
+        <div class="flex flex-col items-center justify-center py-3">
+            <img src="./assets/icons/icon-sad.svg" alt="sad" class="w-12 h-12 mb-4">
+            <p class="font-bold text-2xl text-tuna-900">No se encontraron anuncios</p>
+        </div>
+    }
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator>
 </div>

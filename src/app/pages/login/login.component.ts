@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm  } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { InputComponent } from '../../shared/components/input/input.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 
@@ -12,7 +12,7 @@ interface LoginModel {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterModule, InputComponent, ButtonComponent],
+  imports: [FormsModule, RouterLink, InputComponent, ButtonComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -25,8 +25,7 @@ export class LoginComponent {
   constructor(private router: Router) {}
 
   onSubmit(form: NgForm) {
-    if (form.valid) {
-      this.router.navigate(['/home']);
-    }
+    this.router.navigate(['/dashboard/home']);
+    console.log('Form submitted:', this.loginModel);
   }
 }

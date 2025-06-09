@@ -1,94 +1,78 @@
-import { Component, Input, forwardRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { Component, EventEmitter, Input, Optional, Output } from '@angular/core';
+import { ControlContainer, FormGroupDirective } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { INPUT_TYPES } from '../../../const/const';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './input.component.html',
   styleUrl: './input.component.css',
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => InputComponent),
-    multi: true
-  }]
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useFactory: (container: ControlContainer) => container,
+      deps: [[new Optional(), FormGroupDirective]],
+    },
+  ],
 })
-export class InputComponent implements ControlValueAccessor {
-  @Input() type: string = 'text'; //este puede ser un string 
-  @Input() placeholder: string = 'Escribe aquí';
-  @Input() name: string = '';
+export class InputComponent {
+
+  //Reactive Form
+  @Input() controlName?: string;
+
+  //General Prompts
   @Input() id: string = '';
-  @Input() required: boolean = false;
-  @Input() disabled: boolean = false;
+  @Input() type: string = 'text';
+  @Input() placeholder: string = 'Escribe aquí';
   @Input() label: string = '';
+  @Input() maxlength: string = '72';
+  @Input() disabled: boolean = false;
 
-  hasError: boolean = false;
-  errorMessage: string = '';
-  value: string = '';
+  //Standalone Prompts
+  @Input() value: string = '';
+  @Output() valueChange = new EventEmitter<string>()
+  standaloneValue: string = '';
 
-  onChange = (_: any) => {};
-  onTouched = () => {};
 
-  writeValue(val: any): void {
-    this.value = val || '';
+  constructor(private controlContainer: ControlContainer | null) { }
+  ngOnInit() {
+    if (!this.isReactiveForm) this.standaloneValue = this.value
+  }
+  ngOnChanges() {
+    if (!this.isReactiveForm) this.standaloneValue = this.value
+  }
+  get isReactiveForm(): boolean {
+    return !!(this.controlContainer && this.controlName)
+  }
+  get control() {
+    return this.controlContainer?.control?.get(this.controlName!)
   }
 
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
+  hasError(): boolean {
+    return !!(this.control?.invalid && this.control?.touched)
   }
 
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
+  getErrorMessage(): string {
+    if (!this.control?.errors) return ""
+
+    const errors = this.control.errors
+
+    if (errors["required"]) return "Este campo es obligatorio"
+    if (errors["minlength"]) return `Mínimo ${errors["minlength"].requiredLength} caracteres`
+    if (errors["email"]) return "Formato de correo inválido"
+    if (errors["pattern"]) return "Formato inválido"
+    if (errors["min"]) return `El valor mínimo es ${errors["min"].min}`
+    if (errors["max"]) return `El valor máximo es ${errors["max"].max}`
+
+    return "Campo inválido"
   }
 
-  setDisabledState?(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+  onInputChange(event: Event) {
+    const target = event.target as HTMLInputElement
+    this.standaloneValue = target.value
+    this.valueChange.emit(this.standaloneValue)
   }
 
-  onInput(event?: any): void {
-    if (event) this.value = event.target.value;
-
-    let isInvalid = false;
-
-    switch (this.type) {
-      case INPUT_TYPES.MAIL:
-        this.value = this.value.replace(/\s+/g, '');
-        const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value);
-        if (!correoValido || this.value.length > 32) {
-          isInvalid = true;
-        }
-        break;
-
-      case INPUT_TYPES.TEL:
-        this.value = this.value.replace(/\D/g, '');
-        if (this.value.length === 10) {
-          this.value = this.value.replace(/^(\d{3})(\d{3})(\d{2})(\d{2})$/, '$1 $2 $3 $4');
-        } else {
-          isInvalid = true;
-        }
-        break;
-
-      case INPUT_TYPES.PASSWORD:
-        this.value = this.value.replace(/\s+/g, '');
-        if (this.value.length < 8 || this.value.length > 64) {
-          isInvalid = true;
-        }
-        break;
-
-      default:
-        if (this.value.length > 72) {
-          isInvalid = true;
-        }
-        break;
-    }
-
-    this.hasError = isInvalid;
-    this.errorMessage = isInvalid ? 'Revise la información' : '';
-
-    this.onChange(this.value);
-    this.onTouched();
-  }
 }

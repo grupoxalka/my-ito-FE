@@ -1,0 +1,62 @@
+@if(isEditorOpen){
+<div class="fixed inset-0 bg-black opacity-50 z-40" (click)="closeEditor()"></div>
+}
+
+<div class="fixed flex flex-col top-0 right-0 bottom-0 max-md:left-0  transition-transform z-50"
+  [ngClass]="isEditorOpen? 'translate-x-0' : 'translate-x-full'">
+
+  @if (sent) {
+  <div class="absolute inset-0 bg-white z-10 flex flex-col items-center justify-center gap-6 px-12 py-8">
+    <button (click)="createNew()" class="absolute top-5 left-5 text-2xl font-bold hover:cursor-pointer">
+      <img src="/assets/icons/icon-close.svg" alt="close" class="w-6 h-6" />
+    </button>
+    <img src="/assets/announcement-sent.svg" class="w-12 h-12" alt="éxito" />
+    <h1 class="text-2xl font-bold text-center text-radiance-950">Guardado con éxito</h1>
+    <app-button class="w-full max-w-sm" buttonText="Crear nuevo" color="blue" (onClick)="createNew()"></app-button>
+  </div>
+  }
+
+  <form [formGroup]="form"
+    class="w-full h-full md:max-w-lg bg-white shadow-lg flex flex-col justify-between">
+    <div class="py-8 px-12 flex flex-col gap-6 overflow-y-auto">
+      <div class="flex flex-col items-center md:flex-row md:gap-4 mb-6">
+        <img src="/assets/owl.svg" alt="Avatar" class="w-24 h-24 p-6 bg-blue-50 rounded-full" />
+        <h2 class="text-xl font-semibold mt-2 md:mt-0">Crear Nuevo Usuario</h2>
+      </div>
+
+      <fieldset>
+        <label class="block underline text-nevada-950 mb-1">Tipo De Usuario</label>
+        <select formControlName="type"
+          class="w-full border-2 rounded-md px-3 py-2 bg-radiance-50 text-center text-radiance-950">
+          <option value="">Default</option>
+          <option value="Profesores">Profesores</option>
+          <option value="Administrativos">Administrativos</option>
+          <option value="Alumnos">Alumnos</option>
+        </select>
+      </fieldset>
+
+      <fieldset class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+
+        <app-input id="name" controlName="name" label="Nombre(s) *" placeholder="Eduardo Ángel"></app-input>
+        <app-input id="lastName" controlName="lastName" label="Apellido Paterno *" placeholder="González"></app-input>
+        <app-input id="secondLastName" controlName="secondLastName" label="Apellido Materno"
+          placeholder="Pérez"></app-input>
+      </fieldset>
+
+      <fieldset class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <app-input id="email" controlName="email" type="email" label="Correo Electrónico *"
+          placeholder="nombre@correo.com"></app-input>
+        <app-input id="phone" name="phone" controlName="phone" type="tel" label="Número De Celular"
+          placeholder="272 222 2222" maxlength="10"></app-input>
+      </fieldset>
+      <app-input id="notes" controlName="notes" label="Notas" placeholder="Default"></app-input>
+    </div>
+
+    <div class="flex justify-center items-center gap-4  bg-blue-50 py-5 ">
+      <app-button buttonText="Cancelar" color="red" iconSrc="/assets/symbols-cancel.svg"
+        (onClick)="closeEditor()"></app-button>
+      <app-button buttonText="Guardar" color="blue" iconSrc="/assets/symbols-save.svg"
+        (onClick)="submitForm()"></app-button>
+    </div>
+  </form>
+</div>
