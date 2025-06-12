@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MODAL_CONTENT } from '../../../const/const';
 
 @Component({
@@ -10,6 +10,10 @@ import { MODAL_CONTENT } from '../../../const/const';
 })
 export class ModalComponent {
   @Input() type: number = 1;
+  @Output() confirmed = new EventEmitter<boolean>();
+  isOpen: boolean = false;
+
+  @ViewChild('dialogModal') dialogModal!: ElementRef<HTMLDialogElement>;
 
   get modalType() {
     return MODAL_CONTENT.find(type => type.ID === this.type);
@@ -38,4 +42,17 @@ export class ModalComponent {
   get altIcon(): string {
     return this.modalType?.ALT_ICON || '';
   }
+  showModal() {
+    this.dialogModal.nativeElement.showModal();
+    this.isOpen = true;
+  }
+
+  closeModal(result: boolean = false) {
+    this.dialogModal.nativeElement.close();
+    this.confirmed.emit(result);
+    this.isOpen = false;
+  }
+
+
+  
 }

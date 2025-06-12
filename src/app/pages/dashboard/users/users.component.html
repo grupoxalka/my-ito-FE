@@ -1,1 +1,58 @@
-<p>users works!</p>
+<section class="bg-white py-6 px-12 shadow-custom rounded-sm mb-12">
+    <h2 class="uppercase font-semibold border-b-nevada-600 border-b text-2xl pb-1">Buscador de Usuarios</h2>
+
+    <div class="flex flex-col gap-6 text-center mt-8 p-6 items-center">
+        <img src="/assets/owl.svg" alt="Owl" class="w-12 h-12">
+
+        <p class="uppercase">Encuentra a un usuario por su
+            <span class="font-bold">numero de control</span> ó
+            <span class="font-bold">nombre completo</span>
+        </p>
+
+        <div class="w-full max-w-2xl relative">
+            <app-input 
+                placeholder="user ID ó Full_Name"
+                [value]="searchValue" 
+                (valueChange)="search($event)"
+             />
+            <img src="/assets/icons/icon-search.svg" alt="search"
+                class="absolute right-4 top-1/2 transform -translate-y-1/2  pointer-events-none">
+        </div>
+    </div>
+@if (searchValue) {
+    <app-table-users 
+        [users]="filteredUsers" 
+        (deleteUser)="deleteUser($event)" 
+        (editUser)="editUser($event)" 
+    />
+}
+
+</section>
+
+<section class="mb-12">
+    <h2 class="uppercase font-semibold text-2xl mb-2.5">Gestión de usuarios</h2>
+    <div class="bg-white py-5 px-12 shadow-custom rounded-sm f">
+        <button (click)="setOpenEditor(true)"
+            class="flex items-center gap-2 shadow-custom py-3 px-6 uppercase font-semibold rounded-lg border-nevada-100 hover:cursor-pointer">
+            <img src="/assets/icons/icon-add-user.svg" alt="add-user" class="w-8 h-8 rounded-full bg-radiance-100 p-1">
+            <span>Añadir nuevo usuario</span>
+        </button>
+    </div>
+</section>
+
+<section class="bg-white py-3 px-4 shadow-custom rounded-sm flex flex-col gap-3">
+    <app-table-users 
+        [users]="users" 
+        tableName="Ultimos usuarios agregados" 
+        (deleteUser)="deleteUser($event)" 
+        (editUser)="editUser($event)" 
+    />
+</section>
+
+<app-user-editor 
+    [isEditorOpen]="isEditorOpen" 
+    (isEditorClose)="setOpenEditor(false)"
+    (userCreated)="addNewUser($event)" 
+/>
+
+<app-modal #modal (confirmed)="onModalAction($event)" />

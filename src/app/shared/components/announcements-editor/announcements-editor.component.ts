@@ -15,7 +15,9 @@ import { BORRADOR_STATUS, ENVIADO_STATUS } from '../../../const/const';
     FormsModule,
     InputComponent,
     SelectComponent,
-    TextareaComponent,],
+    TextareaComponent,
+    ButtonComponent
+],
   templateUrl: './announcements-editor.component.html',
   styleUrl: './announcements-editor.component.css'
 })
@@ -48,7 +50,10 @@ export class AnnouncementsEditorComponent {
     this.sent = true;
   }
 
-
+  createNew(form: NgForm) {
+    form.reset();
+    this.sent = false;
+  }
   reset() {
     this.sent = false;
     this.announcement = { audience: '', title: '', message: '', estatus: BORRADOR_STATUS };

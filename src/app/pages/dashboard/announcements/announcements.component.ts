@@ -20,7 +20,7 @@ export class AnnouncementsComponent {
   }
   @ViewChild(TableAnnouncementsComponent) tableAnnouncements!: TableAnnouncementsComponent;
 
-  agregarNuevoAnuncio(anuncio: EditorAnnouncement) {
+  addNewAnnouncement(anuncio: EditorAnnouncement) {
     const nuevoAnuncio: Announcement = { titulo: anuncio.title, name: 'Admin', fecha: '02-06-25', estatus: anuncio.estatus };
     this.tableAnnouncements.addAnnouncement(nuevoAnuncio);
     console.log('Nuevo anuncio agregado:', anuncio);

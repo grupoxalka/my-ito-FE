@@ -37,6 +37,7 @@
       <app-button
         [buttonText]="'Inicia Sesión'"
         [isDisabled]="!loginForm.valid"
+        (onClick)="onSubmit(loginForm)"
       ></app-button>
     </form>
 
@@ -47,7 +48,7 @@
       <div class="absolute inset-0 top-1/2 bg-gray-300 h-px"></div>
     </div>
 
-    <a routerLink="/recoverypassword" class="text-sm text-blue-600 hover:underline">
+    <a routerLink="/recovery-password" class="text-sm text-blue-600 hover:underline">
       Solicitar recuperación
     </a>
   </div>

@@ -1,6 +1,6 @@
 export const INPUT_TYPES = {
-   
-    MAIL: 'mail',
+
+    EMAIL: 'email',
     TEL: 'tel',
     PASSWORD: 'password'
 };

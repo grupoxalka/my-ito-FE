@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import Announcement from '../../../types/Announcement';
@@ -11,6 +11,7 @@ import Announcement from '../../../types/Announcement';
   standalone: true
 })
 export class TableAnnouncementsComponent implements AfterViewInit {
+  @Input() tableName: string = 'Anuncios';
 
   announcements: Announcement[] = [
     { titulo: "Clases Inician 1", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },

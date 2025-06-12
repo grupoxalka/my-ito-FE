@@ -1,5 +1,4 @@
 <div class="bg-white py-3 px-4 shadow-custom rounded-sm flex flex-col gap-3">
-    <h2 class="uppercase font-bold p-3 pb-5 border-b-nevada-600 border-b">Anuncios</h2>
     <app-table-announcements />
     <div class="flex justify-end">
         <button class="bg-white shadow-custom p-3 rounded-lg border-nevada-100 hover:cursor-pointer"
@@ -11,4 +10,4 @@
 </div>
 
 <app-announcements-editor [isEditorOpen]="isEditorOpen" (isEditorClose)="setOpenEditor(false)"
-    (announcementCreated)="agregarNuevoAnuncio($event)" />
+    (announcementCreated)="addNewAnnouncement($event)" />
