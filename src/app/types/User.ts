@@ -1,9 +1,12 @@
 export default interface User {
     id: number;
-    nombre: string;
-    tipo: string;
-    fecha: string;
-    correo: string;
-    notas: string;
+    name: string;
+    paternalSurname?: string;
+    maternalSurname?: string;
+    email: string;
+    phone?: string;
+    role: string;
+    createdAt: string;
+    notes?: string;
 
 }
