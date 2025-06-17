@@ -66,13 +66,13 @@ export class UserEditorComponent {
   editUser(user: User) {
 
     this.form.patchValue({
-      type: user.tipo,
-      name: user.nombre.split(' ')[0],
-      lastName: user.nombre.split(' ')[1],
-      secondLastName: user.nombre.split(' ')[2] || '',
-      email: user.correo,
-      phone: '272 727 2727',
-      notes: user.notas || ''
+      type: user.role,
+      name: user.name,
+      lastName: user.paternalSurname,
+      secondLastName: user.maternalSurname,
+      email: user.email,
+      phone: user.phone,
+      notes: user.notes || ''
     });
     this.isEditorOpen = true;
   }

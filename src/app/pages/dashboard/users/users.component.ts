@@ -1,38 +1,37 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { TableUsersComponent } from "../../../shared/components/table-users/table-users.component";
 import { UserEditorComponent } from '../../../shared/components/user-editor/user-editor.component';
 import { InputComponent } from "../../../shared/components/input/input.component";
 import { ModalComponent } from "../../../shared/components/modal/modal.component";
+import { UsersService } from '../../../services/users.service';
 import User from '../../../types/User';
 import EditorUser from '../../../types/EditorUser';
 import generateID from '../../../tools/generateID';
 
 @Component({
   selector: 'app-users',
-  imports: [TableUsersComponent, UserEditorComponent, InputComponent, ModalComponent],
+  imports: [
+    TableUsersComponent, 
+    UserEditorComponent, 
+    InputComponent, 
+    ModalComponent
+  ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
 export class UsersComponent {
-  users: User[] = [
-    { id: 1,  nombre: "Juan Perez", tipo: 'Alumnos', correo: 'correo@correo.com', fecha: "19-02-24", notas: 'Nota 1' },
-    { id: 2,  nombre: "Juan Perez 2", tipo: 'Administrativos', correo: 'correo@correo.com', fecha: "19-02-24", notas: 'Nota 1' },
-    { id: 3,  nombre: "Juan Perez 3", tipo: 'Administrativos', correo: 'correo@correo.com', fecha: "19-02-24", notas: 'Nota 1' },
-    { id: 4,  nombre: "Juan Perez 4", tipo: 'Alumnos', correo: 'correo@correo.com', fecha: "19-02-24", notas: 'Nota 1' },
-    { id: 5,  nombre: "Juan Perez 5", tipo: 'Alumnos', correo: 'correo@correo.com', fecha: "19-02-24", notas: 'Nota 1' },
-    { id: 6,  nombre: "Juan Perez 6", tipo: 'Profesores', correo: 'correo@correo.com', fecha: "19-02-24", notas: 'Nota 1' },
-    { id: 7,  nombre: "Juan Perez 7", tipo: 'Alumnos', correo: 'correo@correo.com', fecha: "19-02-24", notas: 'Nota 1' },
-    { id: 8,  nombre: "Juan Perez 8", tipo: 'Alumnos', correo: 'correo@correo.com', fecha: "19-02-24", notas: 'Nota 1' },
+  
+  private userService = inject(UsersService);
 
-  ];
+  users: User[] = [];
   filteredUsers: User[] = [...this.users];
   isEditorOpen: boolean = false;
-  userToEdit?: User;
   searchValue: string = '';
+  totalPages = signal<number>(0);
+  token: string = ''; // Get this token form localStorage later
   
   @ViewChild(ModalComponent) modal!: ModalComponent;
   @ViewChild(UserEditorComponent) userEditor!: UserEditorComponent;
-
 
   setOpenEditor(value: boolean) {
     this.isEditorOpen = value;
@@ -41,11 +40,13 @@ export class UsersComponent {
   addNewUser(user: EditorUser) {
     const nuevoUsuario: User = { 
       id: generateID(),
-      nombre: user.name + user.lastName + user.secondLastName,
-      tipo: user.type,
-      correo: user.email,
-      fecha: '02-06-25',
-      notas: user.notes,
+      name: user.name,
+      paternalSurname: user.lastName,
+      maternalSurname: user.secondLastName,
+      role: user.type,
+      email: user.email,
+      createdAt: Date.now().toString(),
+      notes: user.notes,
     };
     this.users = [nuevoUsuario, ...this.users];
     console.log('Nuevo anuncio agregado:', nuevoUsuario);
@@ -57,7 +58,6 @@ export class UsersComponent {
     this.filteredUsers = this.filterUsers(this.searchValue);
     console.log('Usuario eliminado:', user);
   }
-
   editUser(user: User) {
     this.userEditor.editUser(user);
   }
@@ -69,8 +69,8 @@ export class UsersComponent {
   filterUsers(value: string): User[] {
     if (!value) return [...this.users];
     return this.users.filter(user =>
-      user.nombre.toLowerCase().includes(value.toLowerCase()) ||
-      user.correo.toLowerCase().includes(value.toLowerCase())
+      user.name.toLowerCase().includes(value.toLowerCase()) ||
+      user.email.toLowerCase().includes(value.toLowerCase())
     );
   }
 
@@ -85,4 +85,36 @@ export class UsersComponent {
       console.log('Modal closed without action');
     }
   }
+
+  //Service integration
+  ngOnInit(): void {
+    this.userService.signIn().subscribe({
+      next: (res) => {
+        this.token = res.token;
+        this.loadTableUsers(this.token);
+        console.log('Inicio de sesión exitoso:', res);
+      },
+      error: (err) => {
+        console.error('Error al iniciar sesión:', err);
+      }
+    });
+  }
+
+  loadTableUsers(token: string, page: number = 0) {
+    this.userService.getUsers(token, page).subscribe({
+      next: (data) => {
+        this.users = data.content;
+        this.totalPages.set(data.totalPages);
+        console.log('Usuarios:', data);
+      },
+      error: (err) => {
+        console.error('Error al obtener usuarios:', err);
+      }
+    });
+  }
+
+  onTablePageChange(page: number) {
+    this.loadTableUsers(this.token, page);
+  }
+
 }

@@ -1,33 +1,27 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, output, ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import {Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { DatePipe, NgClass } from '@angular/common';
+
 import User from '../../../types/User';
 
 @Component({
   selector: 'app-table-users',
-  imports: [MatTableModule, MatPaginatorModule],
+  imports: [DatePipe, NgClass],
   templateUrl: './table-users.component.html',
   styleUrl: './table-users.component.css'
 })
 export class TableUsersComponent {
   @Input() tableName: string = 'Usuarios';
   @Input() users: User[] = [];
+  @Input() totalPages: number = 0;
+
   @Output() deleteUser = new EventEmitter<User>();
   @Output() editUser = new EventEmitter<User>();
-
-  displayedColumns: string[] = ['nombre', 'tipo', 'fecha', 'correo', 'notas', 'acciones'];
-
-  dataSource = new MatTableDataSource<User>(this.users);
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
+  @Output() pageChanged = new EventEmitter<number>();
+  currentPage: number = 0;
+  totalPagesArray = Array.from({ length: this.totalPages }, (_, i) => i);
 
   ngOnChanges(): void {
-    this.dataSource.data = this.users;
+    this.totalPagesArray = Array.from({ length: this.totalPages }, (_, i) => i);
   }
 
   onEditAction(user: User) {
@@ -41,9 +35,31 @@ export class TableUsersComponent {
 
   addUser(newUser: User) {
     this.users = [newUser, ...this.users];
-    this.dataSource.data = this.users;
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
+  }
+  onPageChange(page: number) {
+    if( page < 0 || page >= this.totalPages) return;
+
+    this.currentPage = page;
+    this.pageChanged.emit(this.currentPage);
+  }
+
+  convertRoleToLabel(role: string): string {
+    switch (role) {
+      case 'ito_admin':
+        return 'Administrador';
+
+      case 'ito_teacher':
+        return 'Profesor';
+
+      case 'ito_student':
+        return 'Alumno';
+
+      case 'ito_super_admin':
+        return 'Moderador';
+        
+      default:
+        return 'Desconocido';
     }
   }
+
 }

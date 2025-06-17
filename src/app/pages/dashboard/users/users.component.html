@@ -45,7 +45,9 @@
         [users]="users" 
         tableName="Ultimos usuarios agregados" 
         (deleteUser)="deleteUser($event)" 
-        (editUser)="editUser($event)" 
+        (editUser)="editUser($event)"
+        [totalPages]="totalPages()" 
+        (pageChanged)="onTablePageChange($event)"
     />
 </section>
 
