@@ -21,6 +21,7 @@ export class UserEditorComponent {
   @Input() isEditorOpen = true;
   @Output() isEditorClose = new EventEmitter<void>();
   @Output() userCreated = new EventEmitter();
+  @Input() error: boolean = false;
 
   form = new FormGroup({
     type: new FormControl('', Validators.required),
@@ -34,6 +35,7 @@ export class UserEditorComponent {
     notes: new FormControl(''),
   });
   sent = false;
+
   onSave() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -47,11 +49,8 @@ export class UserEditorComponent {
       this.form.markAllAsTouched();
       return;
     }
-    //Llamada al servicio para guardar/enviar.
     this.userCreated.emit({ ...this.form.value });
-    this.sent = true;
   }
-
 
   createNew() {
     this.form.reset();
