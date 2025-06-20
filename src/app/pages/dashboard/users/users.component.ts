@@ -113,8 +113,8 @@ export class UsersComponent {
     this.destroyRef.onDestroy(() => suscription.unsubscribe());
   }
 
-  private loadTableUsers(token: string, page: number = 0) {
-    const suscription = this.usersService.getUsers(token, page).subscribe({
+  private loadTableUsers(page: number = 0) {
+    const suscription = this.usersService.getUsers(this.token, page).subscribe({
       next: (data) => {
         this.users = data.content;
         this.totalPages = data.totalPages;
@@ -144,7 +144,7 @@ export class UsersComponent {
   }
 
   onTablePageChange(page: number) : void {
-    this.loadTableUsers(this.token, page);
+    this.loadTableUsers(page);
   }
 
   onTablePageChangeSearched (page: number) : void {
