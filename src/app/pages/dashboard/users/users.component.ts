@@ -1,4 +1,4 @@
-import { Component, inject, signal, ViewChild } from '@angular/core';
+import { Component, inject, Output, output, signal, ViewChild } from '@angular/core';
 import { TableUsersComponent } from "../../../shared/components/table-users/table-users.component";
 import { UserEditorComponent } from '../../../shared/components/user-editor/user-editor.component';
 import { InputComponent } from "../../../shared/components/input/input.component";
@@ -6,22 +6,21 @@ import { ModalComponent } from "../../../shared/components/modal/modal.component
 import { UsersService } from '../../../services/users.service';
 import User from '../../../types/User';
 import EditorUser from '../../../types/EditorUser';
-import generateID from '../../../tools/generateID';
 
 @Component({
   selector: 'app-users',
   imports: [
-    TableUsersComponent, 
-    UserEditorComponent, 
-    InputComponent, 
+    TableUsersComponent,
+    UserEditorComponent,
+    InputComponent,
     ModalComponent
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
 export class UsersComponent {
-  
-  private userService = inject(UsersService);
+
+  private usersService = inject(UsersService);
 
   users: User[] = [];
   filteredUsers: User[] = [...this.users];
@@ -29,7 +28,7 @@ export class UsersComponent {
   searchValue: string = '';
   totalPages = signal<number>(0);
   token: string = ''; // Get this token form localStorage later
-  
+
   @ViewChild(ModalComponent) modal!: ModalComponent;
   @ViewChild(UserEditorComponent) userEditor!: UserEditorComponent;
 
@@ -37,19 +36,29 @@ export class UsersComponent {
     this.isEditorOpen = value;
   }
 
-  addNewUser(user: EditorUser) {
-    const nuevoUsuario: User = { 
-      id: generateID(),
-      name: user.name,
-      paternalSurname: user.lastName,
-      maternalSurname: user.secondLastName,
-      role: user.type,
-      email: user.email,
-      createdAt: Date.now().toString(),
-      notes: user.notes,
-    };
-    this.users = [nuevoUsuario, ...this.users];
-    console.log('Nuevo anuncio agregado:', nuevoUsuario);
+  addNewUser(userData: EditorUser) {
+    const user: User = {
+      name: userData.name,
+      paternalSurname: userData.lastName,
+      maternalSurname: userData.secondLastName,
+      email: userData.email,
+      phone: userData.phone,
+      role: userData.type,
+      notes: userData.notes
+    }
+
+    this.usersService.addUser(this.token, user).subscribe({
+      next: (usr) => {
+        console.log('Usuario creado', usr);
+        this.userEditor.error = false;
+        this.userEditor.sent = true;
+      },
+      error: (err) => {
+        console.error('Error al crear el usuario:', err);
+        this.userEditor.error = true;
+        this.userEditor.sent = true;
+      }
+    });
   }
 
   deleteUser(user: User) {
@@ -75,7 +84,7 @@ export class UsersComponent {
   }
 
   //Modal actions
-  openModal(){
+  openModal() {
     this.modal.showModal();
   }
   onModalAction(confirmed: boolean) {
@@ -88,7 +97,7 @@ export class UsersComponent {
 
   //Service integration
   ngOnInit(): void {
-    this.userService.signIn().subscribe({
+    this.usersService.signIn().subscribe({
       next: (res) => {
         this.token = res.token;
         this.loadTableUsers(this.token);
@@ -101,7 +110,7 @@ export class UsersComponent {
   }
 
   loadTableUsers(token: string, page: number = 0) {
-    this.userService.getUsers(token, page).subscribe({
+    this.usersService.getUsers(token, page).subscribe({
       next: (data) => {
         this.users = data.content;
         this.totalPages.set(data.totalPages);
