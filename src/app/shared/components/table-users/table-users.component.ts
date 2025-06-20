@@ -33,9 +33,6 @@ export class TableUsersComponent {
     this.deleteUser.emit(user);
   }
 
-  addUser(newUser: User) {
-    this.users = [newUser, ...this.users];
-  }
   onPageChange(page: number) {
     if( page < 0 || page >= this.totalPages) return;
 
