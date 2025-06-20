@@ -54,7 +54,7 @@ export class UsersComponent {
         console.log('Usuario creado', usr);
         this.userEditor.error = false;
         this.userEditor.sent = true;
-        this.loadTableUsers(this.token);
+        this.loadTableUsers();
         this.searchUsers(this.searchValue);
       },
       error: (err) => {
@@ -103,7 +103,7 @@ export class UsersComponent {
     const suscription = this.usersService.signIn().subscribe({
       next: (res) => {
         this.token = res.token;
-        this.loadTableUsers(this.token);
+        this.loadTableUsers();
         console.log('Inicio de sesión exitoso:', res);
       },
       error: (err) => {
