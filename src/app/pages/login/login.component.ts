@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { FormsModule, NgForm  } from '@angular/forms';
+import { ReactiveFormsModule,FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { InputComponent } from '../../shared/components/input/input.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
+import { AuthService } from '../../services/auth.service'; 
 
 interface LoginModel {
   email: string;
@@ -12,20 +13,37 @@ interface LoginModel {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterLink, InputComponent, ButtonComponent],
+  imports: [ReactiveFormsModule, RouterLink, InputComponent, ButtonComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  loginModel: LoginModel = {
-    email: '',
-    password: ''
-  };
+  form: FormGroup;
 
-  constructor(private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService 
+  ) {
+  this.form = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]]
+  });
+ }
 
-  onSubmit(form: NgForm) {
-    this.router.navigate(['/dashboard/home']);
-    console.log('Form submitted:', this.loginModel);
+    onSubmit() {
+    if (this.form.invalid) return; 
+
+    const loginData = this.form.value;
+
+    this.authService.login(loginData).subscribe({
+      next: () => {
+        console.log('Login successful');
+        this.router.navigate(['/dashboard/home']);
+      },
+      error: (err) => {
+        console.error('Login failed', err);
+      }
+    });
+    }
   }
-}

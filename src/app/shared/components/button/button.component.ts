@@ -15,6 +15,5 @@ export class ButtonComponent {
   @Input() iconSrc?: string;
   @Input() buttonType: 'submit' |'button' = 'button';
   @Input() color: 'green' | 'red' | 'blue' = 'blue';
-  @Output() onClick = new EventEmitter<void>(); 
+  @Output() onClick = new EventEmitter<void>();
 }
-
