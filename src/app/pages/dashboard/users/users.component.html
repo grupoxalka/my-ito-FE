@@ -12,8 +12,7 @@
         <div class="w-full max-w-2xl relative">
             <app-input 
                 placeholder="user ID ó Full_Name"
-                [value]="searchValue" 
-                (valueChange)="search($event)"
+                (valueChange)="searchUsers($event)"
              />
             <img src="/assets/icons/icon-search.svg" alt="search"
                 class="absolute right-4 top-1/2 transform -translate-y-1/2  pointer-events-none">
@@ -21,9 +20,11 @@
     </div>
 @if (searchValue) {
     <app-table-users 
-        [users]="filteredUsers" 
+        [users]="searchedUsers" 
+        [totalPages]="totalPagesSearched"
         (deleteUser)="deleteUser($event)" 
-        (editUser)="editUser($event)" 
+        (editUser)="editUser($event)"
+        (pageChanged)="onTablePageChangeSearched($event)"
     />
 }
 
@@ -42,11 +43,11 @@
 
 <section class="bg-white py-3 px-4 shadow-custom rounded-sm flex flex-col gap-3">
     <app-table-users 
-        [users]="users" 
         tableName="Ultimos usuarios agregados" 
+        [users]="users" 
+        [totalPages]="totalPages" 
         (deleteUser)="deleteUser($event)" 
         (editUser)="editUser($event)"
-        [totalPages]="totalPages()" 
         (pageChanged)="onTablePageChange($event)"
     />
 </section>
