@@ -40,15 +40,10 @@ export class UsersService {
     );
   }
 
-  // This method is used temporaly to sign in a user with hardcoded credentials
-  signIn(): Observable<any> {
-    const url = API_URL + '/auth/sign-in';
-    const body = {
-      email: 'daniel.herrandez@gmail.com',
-      password: 'password'
-    };
-
-    return this.httpClient.post<any>(url, body);
+  deleteUser(token: string, userId: string): Observable<any> {
+    const url = `${API_URL}/users/${userId}`;
+    const headers = this.createHeaders(token);
+    return this.httpClient.delete<any>(url, { headers });
   }
 
   private createHeaders(token: string): HttpHeaders {
