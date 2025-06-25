@@ -1,5 +1,5 @@
 export default interface User {
-    id?: number;
+    id?: string;
     name: string;
     paternalSurname?: string;
     maternalSurname?: string;

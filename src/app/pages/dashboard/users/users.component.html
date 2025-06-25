@@ -58,4 +58,9 @@
     (userCreated)="addNewUser($event)" 
 />
 
-<app-modal #modal (confirmed)="onModalAction($event)" />
+<app-modal 
+    [isOpen]="modalState.isOpen"
+    [type]="modalState.type"
+    (onConfirm)="modalConfirm()"
+    (onClose)="modalClose()" 
+/>
