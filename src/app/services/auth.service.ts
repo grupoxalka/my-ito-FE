@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { API_URL, TOKEN_KEY } from '../const/const'; 
@@ -16,16 +16,20 @@ interface LoginResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly loginUrl = `${API_URL}/auth/sign-in`;
-
-  constructor(private http: HttpClient) {}
+  private httpClient = inject(HttpClient);
 
   login(data: LoginRequest): Observable<LoginResponse> { 
-    return this.http.post<LoginResponse>(this.loginUrl, data).pipe(
+    const loginUrl = `${API_URL}/auth/sign-in`;
+    return this.httpClient.post<LoginResponse>(loginUrl, data).pipe(
       tap((response) => {
         localStorage.setItem(TOKEN_KEY, response.token); 
       })
     );
+  }
+
+  forgotPassword(data: any): Observable<any> {
+    const url = `${API_URL}/auth/forgot-password`;
+    return this.httpClient.post<any>(url, data);
   }
 
   getToken(): string | null {
