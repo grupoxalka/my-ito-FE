@@ -22,6 +22,7 @@ export class UserEditorComponent {
   @Output() isEditorClose = new EventEmitter<void>();
   @Output() userCreated = new EventEmitter();
   @Input() error: boolean = false;
+  isEditing: boolean = false;
 
   form = new FormGroup({
     type: new FormControl('', Validators.required),
@@ -55,6 +56,7 @@ export class UserEditorComponent {
   createNew() {
     this.form.reset();
     this.sent = false;
+    this.isEditing = false;
   }
   closeEditor() {
     this.isEditorOpen = false;
@@ -73,6 +75,7 @@ export class UserEditorComponent {
       phone: user.phone,
       notes: user.notes || ''
     });
+    this.isEditing = true;
     this.isEditorOpen = true;
   }
 
