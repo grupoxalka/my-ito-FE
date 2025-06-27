@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output,EventEmitter } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -13,4 +13,11 @@ export class NavbarIconComponent {
   @Input() text: string = '';
   @Input() isActive: boolean = false;
   @Input() path: string = '';
+  @Output() actionClick = new EventEmitter<void>();
+
+  handleClicck() {
+    if (this.path === 'login') {
+      this.actionClick.emit();
+    }
+  }
 }
