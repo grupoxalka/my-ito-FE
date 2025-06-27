@@ -23,6 +23,8 @@ export class UsersComponent {
 
   private usersService = inject(UsersService);
   private destroyRef = inject(DestroyRef);
+  private isEditing = false;
+  private editingUserId: string | null = null;
 
   users: User[] = [];
   searchedUsers: User[] = [];
@@ -44,8 +46,8 @@ export class UsersComponent {
     this.isEditorOpen = value;
   }
 
-  addNewUser(userData: EditorUser) {
-    const user: User = {
+  submitUser(userData: EditorUser) {
+    const user: Partial<User> = {
       name: userData.name,
       paternalSurname: userData.lastName,
       maternalSurname: userData.secondLastName,
@@ -55,16 +57,22 @@ export class UsersComponent {
       notes: userData.notes
     }
 
-    const suscription =  this.usersService.addUser(this.token, user).subscribe({
+    const sub = this.isEditing && this.editingUserId
+      ? this.usersService.updateUser(this.token, this.editingUserId, user)
+      : this.usersService.addUser(this.token, user);
+
+    const suscription = sub.subscribe({
       next: (usr) => {
-        console.log('Usuario creado', usr);
+        console.log(this.isEditing ? 'Usuario editado' : 'Usuario creado', usr);
         this.userEditor.error = false;
         this.userEditor.sent = true;
+        this.isEditing = false;
+        this.editingUserId = null;
         this.loadTableUsers();
         this.searchUsers(this.searchValue);
       },
       error: (err) => {
-        console.error('Error al crear el usuario:', err);
+        console.error('Error al guardar el usuario:', err);
         this.userEditor.error = true;
         this.userEditor.sent = true;
       }
@@ -77,8 +85,12 @@ export class UsersComponent {
     this.userToDelete = user;
     this.openModal(ModalType.DELETE);
   }
-  editUser(user: User): void {
+
+  editUser(user: User) {
+    this.editingUserId = user.id!;
+    this.isEditing = true;
     this.userEditor.editUser(user);
+    this.setOpenEditor(true);
   }
 
   //Modal actions
@@ -93,7 +105,7 @@ export class UsersComponent {
 
   modalConfirm(): void {
     //Delete user action
-    if( this.modalState.type === ModalType.DELETE) {
+    if (this.modalState.type === ModalType.DELETE) {
       const suscription = this.usersService.deleteUser(this.token, this.userToDelete!.id!).subscribe({
         next: () => {
           console.log('Usuario eliminado con exito:', this.userToDelete);
@@ -130,7 +142,7 @@ export class UsersComponent {
     this.destroyRef.onDestroy(() => suscription.unsubscribe());
   }
 
-  searchUsers(value: string, page: number = 0) : void {
+  searchUsers(value: string, page: number = 0): void {
     this.searchValue = value;
     const suscription = this.usersService.searchUsers(this.token, value, page).subscribe({
       next: (data) => {
@@ -145,11 +157,11 @@ export class UsersComponent {
     this.destroyRef.onDestroy(() => suscription.unsubscribe());
   }
 
-  onTablePageChange(page: number) : void {
+  onTablePageChange(page: number): void {
     this.loadTableUsers(page);
   }
 
-  onTablePageChangeSearched (page: number) : void {
+  onTablePageChangeSearched(page: number): void {
     this.searchUsers(this.searchValue, page);
   }
 

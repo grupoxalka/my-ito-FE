@@ -29,7 +29,7 @@ export class UsersService {
       .set('pageSize', pageSize)
       .set("fullName", name)
 
-    return this.httpClient.get<any>(url, { headers, params});
+    return this.httpClient.get<any>(url, { headers, params });
   }
 
   addUser(token: string, userData: any): Observable<any> {
@@ -44,6 +44,14 @@ export class UsersService {
     const url = `${API_URL}/users/${userId}`;
     const headers = this.createHeaders(token);
     return this.httpClient.delete<any>(url, { headers });
+  }
+
+  updateUser(token: string, userId: string, userData: Partial<any>): Observable<any> {
+    return this.httpClient.put(
+      `${API_URL}/users/modify/${userId}`,
+      userData,
+      { headers: this.createHeaders(token) }
+    );
   }
 
   private createHeaders(token: string): HttpHeaders {
