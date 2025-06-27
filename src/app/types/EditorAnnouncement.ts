@@ -1,6 +1,6 @@
 export default interface EditorAnnouncement {
-    audience: string;
     title: string;
+    sentTo: string;
     message: string;
-    estatus: string;
+    status: boolean;
 }

@@ -1,7 +1,7 @@
 export default interface Announcement {
-    titulo: string;
+    title: string;
     name: string;
-    fecha: string;
-    estatus: string;
+    createdAt: string;
+    status: boolean;
 
 }

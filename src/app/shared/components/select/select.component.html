@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <div class="font-roboto">
   @if (label) {
   <label [for]="id" class="block mb-1 text-sm font-medium text-persian-red-500"
@@ -42,3 +43,27 @@
   }
   }
 </div>
+=======
+@if(label){
+    <label class="text-persian-red-500" [ngClass]=" {'text-radiance-950': !hasError() } ">
+        {{ label }}
+    </label>
+}
+<select
+  class="w-full bg-radiance-50 rounded-md px-3 py-2 border-2"
+  [formControlName]="controlName"
+  [ngClass]="{
+      'outline-persian-red-500 border-persian-red-200 text-persian-red-500': hasError(),
+      'outline-radiance-950/20 border-radiance-200/50 text-radiance-950': !hasError()
+  }" 
+>
+  <option [value]="null">{{ placeholder }}</option>
+
+  @for (opt of options; track $index) { 
+    <option [value]="opt.value" [disabled]="opt.disabled">
+      {{ opt.label }}
+    </option>
+  }
+  
+</select>
+>>>>>>> Stashed changes
