@@ -1,49 +1,3 @@
-<<<<<<< Updated upstream
-<div class="font-roboto">
-  @if (label) {
-  <label [for]="id" class="block mb-1 text-sm font-medium text-persian-red-500"
-    [ngClass]=" {'text-radiance-950': !hasError() } ">
-    {{ label }}
-  </label>
-  }
-  @if (isReactiveForm) {
-  <select [id]="id" [formControlName]="controlName!" class="w-full h-9 border rounded-md px-3 text-base bg-radiance-50"
-    [ngClass]="{
-        'bg-tuna-50 text-tuna-400 cursor-not-allowed': disabled,
-        'border-persian-red-200 text-persian-red-500': hasError(),
-        'border-radiance-200/50 text-radiance-950': !hasError()
-      }" [disabled]="disabled">
-    <option [value]="null">{{ placeholder }}</option>
-    <option *ngFor="let opt of options" [value]="opt.value" [disabled]="opt.disabled">
-      {{ opt.label }}
-    </option>
-  </select>
-  @if (hasError()) {
-  <p class="text-m text-persian-red-500 ">
-    {{ errorMessage }}
-  </p>
-  }
-  }@else {
-  <select [id]="id" [name]="name" [ngModel]="model" (ngModelChange)="onChange($event)" (focus)="onFocus()"
-    (blur)="onBlur()" class="w-full h-9 border rounded-md px-3 text-base bg-radiance-50" [ngClass]="{
-        'bg-tuna-50 text-tuna-400 cursor-not-allowed': disabled,
-        'border-radiance-200/50 text-radiance-950': !error && !isFocused,
-        'border-blue-500': !error && isFocused,
-        'border-red-500 text-persian-red-500': error
-      }" [disabled]="disabled">
-    <option [value]="null">{{ placeholder }}</option>
-    <option *ngFor="let opt of options" [value]="opt.value" [disabled]="opt.disabled">
-      {{ opt.label }}
-    </option>
-  </select>
-  @if (error) {
-  <p class="text-m text-persian-red-500">
-    {{ errorMessage }}
-  </p>
-  }
-  }
-</div>
-=======
 @if(label){
     <label class="text-persian-red-500" [ngClass]=" {'text-radiance-950': !hasError() } ">
         {{ label }}
@@ -66,4 +20,3 @@
   }
   
 </select>
->>>>>>> Stashed changes

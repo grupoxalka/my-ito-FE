@@ -1,5 +1,5 @@
 export default interface EditorAnnouncement {
-    title: string;
+    tittle: string;
     sentTo: string;
     message: string;
     status: boolean;

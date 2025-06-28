@@ -15,10 +15,10 @@
         <tbody>
             @for (announcement of announcements; track $index) {
                 <tr class="[&>td]:p-3">
-                    <td> {{ announcement.title }} </td>
+                    <td> {{ announcement.tittle }} </td>
                     <td class="uppercase"></td>
-                    <td>{{announcement.createdAt | date: 'dd/MM/yyyy' }} </td>
-                    <td class="uppercase">{{announcement.status}}</td>
+                    <td>{{ announcement.createdAt | date: 'dd/MM/yyyy' }} </td>
+                    <td class="uppercase">{{convertStatus(announcement.status)}}</td>
                     <td class="flex justify-center items-center gap-3">
                         <button (click)="onEditAction(announcement)" class="rounded-full hover:bg-yellow-400">
                             <img src="./assets/icons/icon-edit.svg" alt="edit">

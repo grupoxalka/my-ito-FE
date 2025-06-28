@@ -39,6 +39,10 @@ export class TableAnnouncementsComponent {
     this.currentPage = page;
     this.pageChanged.emit(this.currentPage);
   }
+
+  convertStatus(status: boolean) : string  {
+    return status ? 'Enviado' : 'Borrador';
+  }
 }
 
 

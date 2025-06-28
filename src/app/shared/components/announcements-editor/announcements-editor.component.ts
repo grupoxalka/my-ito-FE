@@ -23,14 +23,17 @@ import EditorAnnouncement from '../../../types/EditorAnnouncement';
 })
 export class AnnouncementsEditorComponent {
   @Input() isEditorOpen = false;
+  @Input() error = false;
+  @Input() sent = false;
   @Output() isEditorClose = new EventEmitter<void>();
   @Output() announcementCreated = new EventEmitter<EditorAnnouncement>();
+  @Output() resetEditor = new EventEmitter<void>();
   form = new FormGroup({
     sentTo: new FormControl('1', Validators.required),
     title: new FormControl('', Validators.required),
     message: new FormControl('', Validators.required)
   });
-  sent = false;
+
   audienceOptions = [
     { value: 'TEACHER', label: 'Profesores' },
     { value: 'STUDENT', label: 'Alumnos' },
@@ -44,25 +47,23 @@ export class AnnouncementsEditorComponent {
       return;
     }
     const announcement: EditorAnnouncement = {
-      title: this.form.value.title!,
+      tittle: this.form.value.title!,
       message: this.form.value.message!,
       sentTo: this.form.value.sentTo!,
       status
     };
 
     this.announcementCreated.emit(announcement);
-    this.sent = true;
-    console.log('Form submitted successfully', this.form.value);
   }
 
   resetForm() {
     this.form.reset();
-    this.sent = false;
+    this.resetEditor.emit();
   }
+  
   closeEditor() {
-    this.isEditorOpen = false;
     this.isEditorClose.emit();
+    this.resetEditor.emit();
     this.form.reset();
-    this.sent = false;
   }
 }
