@@ -1,61 +1,49 @@
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import Announcement from '../../../types/Announcement';
+import { DatePipe, NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-table-announcements',
   styleUrl: 'table-announcements.component.css',
   templateUrl: 'table-announcements.component.html',
-  imports: [MatTableModule, MatPaginatorModule],
+  imports: [DatePipe, NgClass],
   standalone: true
 })
-export class TableAnnouncementsComponent implements AfterViewInit {
+export class TableAnnouncementsComponent {
   @Input() tableName: string = 'Anuncios';
+  @Input() announcements: Announcement[] = [];
+  @Input() totalPages: number = 0;
+  
+  @Output() editAnnouncement = new EventEmitter<Announcement>();
+  @Output() deleteAnnouncement = new EventEmitter<Announcement>();
+  @Output() pageChanged = new EventEmitter<number>();
 
-  announcements: Announcement[] = [
-    { titulo: "Clases Inician 1", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
-    { titulo: "Clases Inician 2", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
-    { titulo: "Clases Inician 3", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
-    { titulo: "Clases Inician 4", name: 'Admin Name', fecha: "19-02-24", estatus: 'ENVIADO' },
-    { titulo: "Clases Inician 5", name: 'Admin Name', fecha: "19-02-24", estatus: 'ENVIADO' },
-    { titulo: "Clases Inician 6", name: 'Admin Name', fecha: "19-02-24", estatus: 'ENVIADO' },
-    { titulo: "Clases Inician 7", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
-    { titulo: "Clases Inician 8", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
-    { titulo: "Clases Inician 9", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
-    { titulo: "Clases Inician 10", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
-    { titulo: "Clases Inician 11", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
-    { titulo: "Clases Inician 12", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
-    { titulo: "Clases Inician 13", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
-    { titulo: "Clases Inician 14", name: 'Admin Name', fecha: "19-02-24", estatus: 'BORRADOR' },
-  ];
+  currentPage: number = 0;
+  totalPagesArray = Array.from({ length: this.totalPages }, (_, i) => i);
 
-  displayedColumns: string[] = ['titulo', 'name', 'fecha', 'estatus', 'acciones'];
-  dataSource = new MatTableDataSource<Announcement>(this.announcements);
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+  ngOnChanges(): void {
+    this.totalPagesArray = Array.from({ length: this.totalPages }, (_, i) => i);
   }
 
   onEditAction(announcement: Announcement) {
     console.log('Edit action for:', announcement);
-    // Implement edit logic here
+    this.editAnnouncement.emit(announcement);
   }
   onDeleteAction(announcement: Announcement) {
-    this.announcements = this.announcements.filter(a => a !== announcement);
-    this.dataSource.data = this.announcements;
+    console.log('Delete action for:', announcement);
+    this.deleteAnnouncement.emit(announcement);
+  }
+  onPageChange(page: number) {
+    if( page < 0 || page >= this.totalPages) return;
+
+    this.currentPage = page;
+    this.pageChanged.emit(this.currentPage);
   }
 
-  addAnnouncement(newAnnouncement: Announcement) {
-    this.announcements = [newAnnouncement, ...this.announcements];
-    this.dataSource.data = this.announcements;
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-    }
+  convertStatus(status: boolean) : string  {
+    return status ? 'Enviado' : 'Borrador';
   }
-
 }
+
+
 

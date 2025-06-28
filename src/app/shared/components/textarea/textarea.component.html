@@ -1,9 +1,23 @@
-<label *ngIf="label" >{{ label }} </label>
-<textarea 
-[name]="name"
-[(ngModel)]="model"
-[rows]="rows"
-class="w-full border border-blue-200 bg-blue-50 
-         rounded-md px-3 py-2 text-base"
+@if(label){
+    <label class="text-persian-red-500" [ngClass]=" {'text-radiance-950': !hasError() } ">
+        {{ label }}
+    </label>
+}
 
-></textarea>
+<textarea class="w-full border-2 bg-radiance-50 rounded-md px-3 py-2 text-base"
+[name]="name"
+[formControlName]="controlName"
+[rows]="rows"
+[placeholder]="placeholder"
+[ngClass]="{
+    'outline-persian-red-500 border-persian-red-200 text-persian-red-500': hasError(),
+    'outline-radiance-950/20 border-radiance-200/50 text-radiance-950': !hasError()
+    }" 
+>
+</textarea>
+
+@if (hasError()) {
+    <p class="text-m text-persian-red-500">
+        {{ getErrorMessage() }}
+    </p>
+}

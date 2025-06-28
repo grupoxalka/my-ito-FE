@@ -66,8 +66,6 @@ export const MODAL_CONTENT =  [
     }
 ]
 
-export const BORRADOR_STATUS: string = 'BORRADOR';
-export const ENVIADO_STATUS: string = 'ENVIADO';
 /*export const API_URL = "http://ec2-3-134-107-248.us-east-2.compute.amazonaws.com/ito";*/
 export const API_URL = 'https://api.gpiconta.com/ito';
 export const TOKEN_KEY = 'token'; 

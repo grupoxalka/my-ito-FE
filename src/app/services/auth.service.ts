@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { API_URL, TOKEN_KEY } from '../const/const'; 
+import { decodeToken, getUserFromToken, isTokenExpired, JwtPayload } from '../tools/jwt-utils'; 
 
 interface LoginRequest {  
   email: string;
@@ -34,6 +35,21 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem(TOKEN_KEY);
+  }
+
+  getDecodedToken(): JwtPayload | null {
+    const token = this.getToken();
+    return token ? decodeToken(token) : null;
+  }
+
+  getCurrentUser(): any {
+    const token = this.getToken();
+    return token ? getUserFromToken(token) : null;
+  }
+
+  isTokenValid(): boolean {
+    const token = this.getToken();
+    return token ? !isTokenExpired(token) : false;
   }
 
   logout(): void {

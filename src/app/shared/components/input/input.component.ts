@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Optional, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Optional, Output } from '@angular/core';
 import { ControlContainer, FormGroupDirective } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -33,10 +33,9 @@ export class InputComponent {
   //Standalone Prompts
   @Input() value: string = '';
   @Output() valueChange = new EventEmitter<string>()
-  standaloneValue: string = '';
+  private standaloneValue: string = '';
 
-
-  constructor(private controlContainer: ControlContainer | null) { }
+  private controlContainer = inject(ControlContainer);
   ngOnInit() {
     if (!this.isReactiveForm) this.standaloneValue = this.value
   }

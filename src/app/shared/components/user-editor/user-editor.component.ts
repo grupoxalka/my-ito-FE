@@ -37,14 +37,6 @@ export class UserEditorComponent {
   });
   sent = false;
 
-  onSave() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-    this.sent = true;
-  }
-
   submitForm() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
