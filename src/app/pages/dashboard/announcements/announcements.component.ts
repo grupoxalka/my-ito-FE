@@ -5,22 +5,30 @@ import { AnnouncementsService } from '../../../services/announcements.service';
 import { decodeToken, isTokenExpired, JwtPayload } from '../../../tools/jwt-utils';
 import EditorAnnouncement from '../../../types/EditorAnnouncement';
 import Announcement from '../../../types/Announcement';
+import { ModalType } from '../../../enums/ModalType';
+import { ModalComponent } from "../../../shared/components/modal/modal.component";
 
 @Component({
   selector: 'app-announcements',
   standalone: true,
   imports: [
     TableAnnouncementsComponent,
-    AnnouncementsEditorComponent
-  ],
+    AnnouncementsEditorComponent,
+    ModalComponent
+],
   templateUrl: './announcements.component.html',
 })
 export class AnnouncementsComponent {
   private announcementsService = inject(AnnouncementsService);
   private destroyRef = inject(DestroyRef);
-
+  modalState = {
+    isOpen: false,
+    type: ModalType.DELETE
+  }
   private token: string = '';
   private decodedToken: JwtPayload | null = null;
+  private announcementToDelete: Announcement | null = null;
+  
 
   announcements: Announcement[] = [];
   totalPages: number = 0;
@@ -41,6 +49,39 @@ export class AnnouncementsComponent {
   resetEditorState() {
     this.editorState.sent = false;
     this.editorState.error = false;
+  }
+
+  deleteAnnouncement(announcement: Announcement) {
+      this.announcementToDelete = announcement;
+      this.openModal(ModalType.DELETE);
+  }
+
+  //Modal actions
+  openModal(type: ModalType): void {
+    this.modalState.isOpen = true;
+    this.modalState.type = type;
+  }
+  modalClose(): void {
+    this.modalState.isOpen = false;
+    console.log('Modal cerrado');
+  }
+
+  modalConfirm(): void {
+    //Delete user action
+    if (this.modalState.type === ModalType.DELETE) {
+      const suscription = this.announcementsService.deleteAnnouncement(this.token, this.announcementToDelete!.id!).subscribe({
+        next: () => {
+          console.log('Anuncio eliminado con exito:', this.announcementToDelete);
+          this.loadTableAnnouncements();
+        },
+        error: (err) => {
+          console.error('Error al eliminar el Anuncio:', err);
+        }
+      });
+      this.destroyRef.onDestroy(() => suscription.unsubscribe());
+    }
+
+    this.modalState.isOpen = false;
   }
 
   ngOnInit(): void {
