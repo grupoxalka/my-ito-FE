@@ -28,6 +28,13 @@ export class AnnouncementsService {
     return this.httpClient.get<any>(url, { headers, params });
   }
 
+  deleteAnnouncement(token: string, announcementId: string): Observable<any> {
+    const url = `${API_URL}/advertisements/${announcementId}`;
+    const headers = this.createHeaders(token);
+
+    return this.httpClient.delete(url, { headers });
+  }
+
   private createHeaders(token: string): HttpHeaders {
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`,

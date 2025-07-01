@@ -3,6 +3,7 @@
         [totalPages]="totalPages"
         [announcements]="announcements"
         (pageChanged)="onTablePageChange($event)"
+        (deleteAnnouncement)="deleteAnnouncement($event)"
     />
     <div class="flex justify-end">
         <button class="bg-white shadow-custom p-3 rounded-lg border-nevada-100 hover:cursor-pointer"
@@ -20,4 +21,11 @@
     (resetEditor)="resetEditorState()"
     [sent]="editorState.sent"
     [error]="editorState.error"
+/>
+
+<app-modal 
+    [isOpen]="modalState.isOpen"
+    [type]="modalState.type"
+    (onConfirm)="modalConfirm()"
+    (onClose)="modalClose()" 
 />
