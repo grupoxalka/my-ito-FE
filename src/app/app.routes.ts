@@ -5,6 +5,7 @@ import { UsersComponent } from './pages/dashboard/users/users.component';
 import { AnnouncementsComponent } from './pages/dashboard/announcements/announcements.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RecoveryPasswordComponent } from './pages/recovery-password/recovery-password.component';
+import { authGuard } from './guards/auth.guard';
 import { CreatePasswordComponent } from './pages/recovery-password/create-password/create-password.component';
 
 export const routes: Routes = [
@@ -13,7 +14,7 @@ export const routes: Routes = [
     { path: 'create-password', component: CreatePasswordComponent, title: 'Create Password'},
     {
 
-        path: 'dashboard', component: DashboardComponent,
+        path: 'dashboard', canActivate: [authGuard], component: DashboardComponent, 
         children:
             [
                 { path: '', redirectTo: 'home', pathMatch: 'full' },

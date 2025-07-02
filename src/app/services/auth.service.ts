@@ -15,7 +15,7 @@ interface LoginResponse {
 
 @Injectable({  
   providedIn: 'root'
-})
+}) 
 export class AuthService {
   private httpClient = inject(HttpClient);
 
@@ -36,23 +36,24 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem(TOKEN_KEY);
   }
+    isLoggedIn():boolean {
+      const token = this.getToken();
+      if (!token)return false;
 
-  getDecodedToken(): JwtPayload | null {
-    const token = this.getToken();
-    return token ? decodeToken(token) : null;
-  }
+      try {
+        const [, payloadBase64] = token.split('.'); 
+        const payload = JSON.parse(atob(payloadBase64));
+        const exp = payload.exp;
 
-  getCurrentUser(): any {
-    const token = this.getToken();
-    return token ? getUserFromToken(token) : null;
-  }
+        return Date.now() < exp * 1000;
+      } catch (error) {
+        return false;
+      }
+    }
+    logout(): void {
+      localStorage.removeItem(TOKEN_KEY);
+    }
+ }   
 
-  isTokenValid(): boolean {
-    const token = this.getToken();
-    return token ? !isTokenExpired(token) : false;
-  }
 
-  logout(): void {
-    localStorage.removeItem(TOKEN_KEY);
-  }
-}
+
