@@ -29,7 +29,7 @@ export class UsersService {
       .set('pageSize', pageSize)
       .set("fullName", name)
 
-    return this.httpClient.get<any>(url, { headers, params});
+    return this.httpClient.get<any>(url, { headers, params });
   }
 
   addUser(token: string, userData: any): Observable<any> {
@@ -40,15 +40,18 @@ export class UsersService {
     );
   }
 
-  // This method is used temporaly to sign in a user with hardcoded credentials
-  signIn(): Observable<any> {
-    const url = API_URL + '/auth/sign-in';
-    const body = {
-      email: 'daniel.herrandez@gmail.com',
-      password: 'password'
-    };
+  deleteUser(token: string, userId: string): Observable<any> {
+    const url = `${API_URL}/users/${userId}`;
+    const headers = this.createHeaders(token);
+    return this.httpClient.delete<any>(url, { headers });
+  }
 
-    return this.httpClient.post<any>(url, body);
+  updateUser(token: string, userId: string, userData: Partial<any>): Observable<any> {
+    return this.httpClient.put(
+      `${API_URL}/users/modify/${userId}`,
+      userData,
+      { headers: this.createHeaders(token) }
+    );
   }
 
   private createHeaders(token: string): HttpHeaders {

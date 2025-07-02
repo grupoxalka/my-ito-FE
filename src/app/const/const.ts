@@ -1,3 +1,5 @@
+import { ModalType } from "../enums/ModalType";
+
 export const INPUT_TYPES = {
     EMAIL: 'email',
     TEL: 'tel',
@@ -43,24 +45,24 @@ export const LAST_TOOLS = [
     },
 ]
 
-export const MODAL_CONTENT = [
+export const MODAL_CONTENT =  [
     {
-        ID: 1,
-        ICON: "delete-warning",
-        ALT_ICON: "Bote de basura",
-        TITLE: "Confirma que deseas eliminar este elemento",
-        ACTION_BUTTON: "Eliminar",
-        CLOSE_BUTTON: "Cancelar",
-        RED_BG: true
+        type: ModalType.DELETE,
+        icon: "delete-warning",
+        altIcon: "Bote de basura",
+        title: "Confirma que deseas eliminar este elemento",
+        confirmButton: "Eliminar",
+        closeButton: "Cancelar",
+        redBG: true
     },
     {
-        ID: 2,
-        ICON: "exit-warning",
-        ALT_ICON: "Advertencia",
-        TITLE: "Estás a punto de salir sin haber guardado los cambios realizados ¿Deseas continuar?",
-        ACTION_BUTTON: "Volver",
-        CLOSE_BUTTON: "Salir",
-        RED_BG: false
+        type: ModalType.WARNING,
+        icon: "exit-warning",
+        altIcon: "Advertencia",
+        title: "Estás a punto de salir sin haber guardado los cambios realizados ¿Deseas continuar?",
+        confirmButton: "Volver",
+        closeButton: "Salir",
+        redBG: false
     }
 ]
 

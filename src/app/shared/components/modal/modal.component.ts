@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MODAL_CONTENT } from '../../../const/const';
+import { ModalType } from '../../../enums/ModalType';
 
 @Component({
   selector: 'app-modal',
@@ -9,50 +10,45 @@ import { MODAL_CONTENT } from '../../../const/const';
   styleUrl: './modal.component.css'
 })
 export class ModalComponent {
-  @Input() type: number = 1;
-  @Output() confirmed = new EventEmitter<boolean>();
-  isOpen: boolean = false;
+  @Input() type: ModalType = ModalType.DELETE;
+  @Input() isOpen: boolean = false;
+  @Output() onClose = new EventEmitter<void>();
+  @Output() onConfirm = new EventEmitter<void>();
 
-  @ViewChild('dialogModal') dialogModal!: ElementRef<HTMLDialogElement>;
+  close() {
+    this.onClose.emit();
+  }
+
+  confirm() {
+    this.onConfirm.emit();
+  }
 
   get modalType() {
-    return MODAL_CONTENT.find(type => type.ID === this.type);
+    return MODAL_CONTENT.find(modal => modal.type === this.type);
   }
 
   get icon(): string {
-    return this.modalType?.ICON || '';
+    return this.modalType?.icon || '';
   }
 
   get title(): string {
-    return this.modalType?.TITLE || '';
+    return this.modalType?.title || '';
   }
 
   get actionButton(): string {
-    return this.modalType?.ACTION_BUTTON || ''
+    return this.modalType?.confirmButton || ''
   }
 
   get closeButton(): string {
-    return this.modalType?.CLOSE_BUTTON || ''
+    return this.modalType?.closeButton || ''
   }
 
   get actionBG(): boolean {
-    return this.modalType?.RED_BG || false;
+    return this.modalType?.redBG || false;
   }
 
   get altIcon(): string {
-    return this.modalType?.ALT_ICON || '';
+    return this.modalType?.altIcon || '';
   }
-  showModal() {
-    this.dialogModal.nativeElement.showModal();
-    this.isOpen = true;
-  }
-
-  closeModal(result: boolean = false) {
-    this.dialogModal.nativeElement.close();
-    this.confirmed.emit(result);
-    this.isOpen = false;
-  }
-
-
   
 }

@@ -6,10 +6,12 @@ import { AnnouncementsComponent } from './pages/dashboard/announcements/announce
 import { LoginComponent } from './pages/login/login.component';
 import { RecoveryPasswordComponent } from './pages/recovery-password/recovery-password.component';
 import { authGuard } from './guards/auth.guard';
+import { CreatePasswordComponent } from './pages/recovery-password/create-password/create-password.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent, title: 'Login' },
     { path: 'recovery-password', component: RecoveryPasswordComponent, title: 'Recovery Password' },
+    { path: 'create-password', component: CreatePasswordComponent, title: 'Create Password'},
     {
 
         path: 'dashboard', canActivate: [authGuard], component: DashboardComponent, 

@@ -10,23 +10,15 @@
         </p>
 
         <div class="w-full max-w-2xl relative">
-            <app-input 
-                placeholder="user ID ó Full_Name"
-                (valueChange)="searchUsers($event)"
-             />
+            <app-input placeholder="user ID ó Full_Name" (valueChange)="searchUsers($event)" />
             <img src="/assets/icons/icon-search.svg" alt="search"
                 class="absolute right-4 top-1/2 transform -translate-y-1/2  pointer-events-none">
         </div>
     </div>
-@if (searchValue) {
-    <app-table-users 
-        [users]="searchedUsers" 
-        [totalPages]="totalPagesSearched"
-        (deleteUser)="deleteUser($event)" 
-        (editUser)="editUser($event)"
-        (pageChanged)="onTablePageChangeSearched($event)"
-    />
-}
+    @if (searchValue) {
+    <app-table-users [users]="searchedUsers" [totalPages]="totalPagesSearched" (deleteUser)="deleteUser($event)"
+        (editUser)="editUser($event)" (pageChanged)="onTablePageChangeSearched($event)" />
+    }
 
 </section>
 
@@ -42,20 +34,16 @@
 </section>
 
 <section class="bg-white py-3 px-4 shadow-custom rounded-sm flex flex-col gap-3">
-    <app-table-users 
-        tableName="Ultimos usuarios agregados" 
-        [users]="users" 
-        [totalPages]="totalPages" 
-        (deleteUser)="deleteUser($event)" 
-        (editUser)="editUser($event)"
-        (pageChanged)="onTablePageChange($event)"
-    />
+    <app-table-users tableName="Ultimos usuarios agregados" [users]="users" [totalPages]="totalPages"
+        (deleteUser)="deleteUser($event)" (editUser)="editUser($event)" (pageChanged)="onTablePageChange($event)" />
 </section>
 
-<app-user-editor 
-    [isEditorOpen]="isEditorOpen" 
-    (isEditorClose)="setOpenEditor(false)"
-    (userCreated)="addNewUser($event)" 
-/>
+<app-user-editor [isEditorOpen]="isEditorOpen" (isEditorClose)="setOpenEditor(false)"
+    (userCreated)="submitUser($event)" />
 
-<app-modal #modal (confirmed)="onModalAction($event)" />
+<app-modal 
+    [isOpen]="modalState.isOpen"
+    [type]="modalState.type"
+    (onConfirm)="modalConfirm()"
+    (onClose)="modalClose()" 
+/>

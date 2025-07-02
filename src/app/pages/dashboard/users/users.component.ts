@@ -6,6 +6,7 @@ import { ModalComponent } from "../../../shared/components/modal/modal.component
 import { UsersService } from '../../../services/users.service';
 import User from '../../../types/User';
 import EditorUser from '../../../types/EditorUser';
+import { ModalType } from '../../../enums/ModalType';
 
 @Component({
   selector: 'app-users',
@@ -22,6 +23,8 @@ export class UsersComponent {
 
   private usersService = inject(UsersService);
   private destroyRef = inject(DestroyRef);
+  private isEditing = false;
+  private editingUserId: string | null = null;
 
   users: User[] = [];
   searchedUsers: User[] = [];
@@ -29,17 +32,22 @@ export class UsersComponent {
   searchValue: string = '';
   totalPages: number = 0
   totalPagesSearched: number = 0;
-  private token: string = ''; // Get this token form localStorage later
+  modalState = {
+    isOpen: false,
+    type: ModalType.DELETE
+  }
+  private token: string = '';
+  private userToDelete: User | null = null;
 
-  @ViewChild(ModalComponent) modal!: ModalComponent;
+
   @ViewChild(UserEditorComponent) userEditor!: UserEditorComponent;
 
   setOpenEditor(value: boolean) {
     this.isEditorOpen = value;
   }
 
-  addNewUser(userData: EditorUser) {
-    const user: User = {
+  submitUser(userData: EditorUser) {
+    const user: Partial<User> = {
       name: userData.name,
       paternalSurname: userData.lastName,
       maternalSurname: userData.secondLastName,
@@ -49,16 +57,22 @@ export class UsersComponent {
       notes: userData.notes
     }
 
-    const suscription =  this.usersService.addUser(this.token, user).subscribe({
+    const sub = this.isEditing && this.editingUserId
+      ? this.usersService.updateUser(this.token, this.editingUserId, user)
+      : this.usersService.addUser(this.token, user);
+
+    const suscription = sub.subscribe({
       next: (usr) => {
-        console.log('Usuario creado', usr);
+        console.log(this.isEditing ? 'Usuario editado' : 'Usuario creado', usr);
         this.userEditor.error = false;
         this.userEditor.sent = true;
+        this.isEditing = false;
+        this.editingUserId = null;
         this.loadTableUsers();
         this.searchUsers(this.searchValue);
       },
       error: (err) => {
-        console.error('Error al crear el usuario:', err);
+        console.error('Error al guardar el usuario:', err);
         this.userEditor.error = true;
         this.userEditor.sent = true;
       }
@@ -68,49 +82,50 @@ export class UsersComponent {
   }
 
   deleteUser(user: User) {
-    this.modal.showModal();
-    this.users = this.users.filter(u => u !== user);
-    this.searchedUsers = this.filterUsers(this.searchValue);
-    console.log('Usuario eliminado:', user);
+    this.userToDelete = user;
+    this.openModal(ModalType.DELETE);
   }
+
   editUser(user: User) {
+    this.editingUserId = user.id!;
+    this.isEditing = true;
     this.userEditor.editUser(user);
-  }
-
-
-  private filterUsers(value: string): User[] {
-    if (!value) return [...this.users];
-    return this.users.filter(user =>
-      user.name.toLowerCase().includes(value.toLowerCase()) ||
-      user.email.toLowerCase().includes(value.toLowerCase())
-    );
+    this.setOpenEditor(true);
   }
 
   //Modal actions
-  openModal() {
-    this.modal.showModal();
+  openModal(type: ModalType): void {
+    this.modalState.isOpen = true;
+    this.modalState.type = type;
   }
-  onModalAction(confirmed: boolean) {
-    if (confirmed) {
-      this.isEditorOpen = false;
-    } else {
-      console.log('Modal closed without action');
+  modalClose(): void {
+    this.modalState.isOpen = false;
+    console.log('Modal cerrado');
+  }
+
+  modalConfirm(): void {
+    //Delete user action
+    if (this.modalState.type === ModalType.DELETE) {
+      const suscription = this.usersService.deleteUser(this.token, this.userToDelete!.id!).subscribe({
+        next: () => {
+          console.log('Usuario eliminado con exito:', this.userToDelete);
+          this.loadTableUsers();
+          this.searchUsers(this.searchValue);
+        },
+        error: (err) => {
+          console.error('Error al eliminar el usuario:', err);
+        }
+      });
+      this.destroyRef.onDestroy(() => suscription.unsubscribe());
     }
+
+    this.modalState.isOpen = false;
   }
 
   //Service integration
   ngOnInit(): void {
-    const suscription = this.usersService.signIn().subscribe({
-      next: (res) => {
-        this.token = res.token;
-        this.loadTableUsers();
-        console.log('Inicio de sesión exitoso:', res);
-      },
-      error: (err) => {
-        console.error('Error al iniciar sesión:', err);
-      }
-    });
-    this.destroyRef.onDestroy(() => suscription.unsubscribe());
+    this.token = localStorage.getItem('token') || '';
+    this.loadTableUsers();
   }
 
   private loadTableUsers(page: number = 0) {
@@ -125,10 +140,9 @@ export class UsersComponent {
       }
     });
     this.destroyRef.onDestroy(() => suscription.unsubscribe());
-
   }
 
-  searchUsers(value: string, page: number = 0) : void {
+  searchUsers(value: string, page: number = 0): void {
     this.searchValue = value;
     const suscription = this.usersService.searchUsers(this.token, value, page).subscribe({
       next: (data) => {
@@ -143,11 +157,11 @@ export class UsersComponent {
     this.destroyRef.onDestroy(() => suscription.unsubscribe());
   }
 
-  onTablePageChange(page: number) : void {
+  onTablePageChange(page: number): void {
     this.loadTableUsers(page);
   }
 
-  onTablePageChangeSearched (page: number) : void {
+  onTablePageChangeSearched(page: number): void {
     this.searchUsers(this.searchValue, page);
   }
 
