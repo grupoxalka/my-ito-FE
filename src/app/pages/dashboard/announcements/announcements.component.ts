@@ -33,22 +33,33 @@ export class AnnouncementsComponent {
   announcements: Announcement[] = [];
   totalPages: number = 0;
   
-  isEditorOpen: boolean = false;
   editorState = {
+    open: false,
     sent: false,
     error: false,
+    isEditing: false,
+    editingAnnouncement: null as Announcement | null
   }
 
   setOpenEditor(value: boolean) {
-    this.isEditorOpen = value;
+    this.editorState.open = value;
     if (value) {
       this.resetEditorState();
+    } else {
+      this.editorState.isEditing = false;
+      this.editorState.editingAnnouncement = null;
     }
   }
 
   resetEditorState() {
     this.editorState.sent = false;
     this.editorState.error = false;
+  }
+
+  editAnnouncement(announcement: Announcement) {
+    this.setOpenEditor(true);
+    this.editorState.isEditing = true;
+    this.editorState.editingAnnouncement = announcement;
   }
 
   deleteAnnouncement(announcement: Announcement) {
@@ -118,6 +129,25 @@ export class AnnouncementsComponent {
         this.editorState.sent = true;
       },
     });
+    this.destroyRef.onDestroy(() => suscription.unsubscribe());
+  }
+
+  updateAnnouncement(anuncio: EditorAnnouncement) {
+    const announcementId = this.editorState.editingAnnouncement!.id!;
+    const suscription = this.announcementsService.updateAnnouncement(this.token, announcementId, anuncio).subscribe({
+      next: (ann) => {
+        console.log('Anuncio actualizado', ann);
+        this.editorState.sent = true;
+        this.editorState.error = false;
+        this.loadTableAnnouncements();
+      },
+      error: (err) => {
+        console.error('Error al actualizar el anuncio', err);
+        this.editorState.error = true;
+        this.editorState.sent = true;
+      },
+    });
+
     this.destroyRef.onDestroy(() => suscription.unsubscribe());
   }
 
