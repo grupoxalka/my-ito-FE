@@ -4,6 +4,7 @@
         [announcements]="announcements"
         (pageChanged)="onTablePageChange($event)"
         (deleteAnnouncement)="deleteAnnouncement($event)"
+        (editAnnouncement)="editAnnouncement($event)"
     />
     <div class="flex justify-end">
         <button class="bg-white shadow-custom p-3 rounded-lg border-nevada-100 hover:cursor-pointer"
@@ -15,12 +16,16 @@
 </div>
 
 <app-announcements-editor 
-    [isEditorOpen]="isEditorOpen" 
-    (isEditorClose)="setOpenEditor(false)"
-    (announcementCreated)="addNewAnnouncement($event)"
-    (resetEditor)="resetEditorState()"
+    [isEditorOpen]="editorState.open" 
     [sent]="editorState.sent"
     [error]="editorState.error"
+    [isEditing]="editorState.isEditing"
+    [announcementToEdit]="editorState.editingAnnouncement"
+    (isEditorClose)="setOpenEditor(false)"
+    (announcementCreated)="addNewAnnouncement($event)"
+    (announcementUpdated)="updateAnnouncement($event)"
+    (resetEditor)="resetEditorState()"
+    
 />
 
 <app-modal 

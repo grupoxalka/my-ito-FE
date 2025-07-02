@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_URL } from '../const/const';
+import EditorAnnouncement from '../types/EditorAnnouncement';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,12 @@ export class AnnouncementsService {
     return this.httpClient.get<any>(url, { headers, params });
   }
 
+  updateAnnouncement(token: string, announcementId: string, announcementData: EditorAnnouncement): Observable<any> {
+    const url = `${API_URL}/advertisements/${announcementId}`;
+    const headers = this.createHeaders(token);
+
+    return this.httpClient.put(url, announcementData, { headers });
+  }
   deleteAnnouncement(token: string, announcementId: string): Observable<any> {
     const url = `${API_URL}/advertisements/${announcementId}`;
     const headers = this.createHeaders(token);
