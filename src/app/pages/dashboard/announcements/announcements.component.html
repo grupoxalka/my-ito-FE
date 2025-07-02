@@ -1,5 +1,11 @@
 <div class="bg-white py-3 px-4 shadow-custom rounded-sm flex flex-col gap-3">
-    <app-table-announcements />
+    <app-table-announcements 
+        [totalPages]="totalPages"
+        [announcements]="announcements"
+        (pageChanged)="onTablePageChange($event)"
+        (deleteAnnouncement)="deleteAnnouncement($event)"
+        (editAnnouncement)="editAnnouncement($event)"
+    />
     <div class="flex justify-end">
         <button class="bg-white shadow-custom p-3 rounded-lg border-nevada-100 hover:cursor-pointer"
             (click)="setOpenEditor(true)">
@@ -9,5 +15,22 @@
     </div>
 </div>
 
-<app-announcements-editor [isEditorOpen]="isEditorOpen" (isEditorClose)="setOpenEditor(false)"
-    (announcementCreated)="addNewAnnouncement($event)" />
+<app-announcements-editor 
+    [isEditorOpen]="editorState.open" 
+    [sent]="editorState.sent"
+    [error]="editorState.error"
+    [isEditing]="editorState.isEditing"
+    [announcementToEdit]="editorState.editingAnnouncement"
+    (isEditorClose)="setOpenEditor(false)"
+    (announcementCreated)="addNewAnnouncement($event)"
+    (announcementUpdated)="updateAnnouncement($event)"
+    (resetEditor)="resetEditorState()"
+    
+/>
+
+<app-modal 
+    [isOpen]="modalState.isOpen"
+    [type]="modalState.type"
+    (onConfirm)="modalConfirm()"
+    (onClose)="modalClose()" 
+/>

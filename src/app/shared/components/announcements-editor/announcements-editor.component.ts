@@ -1,12 +1,12 @@
-import { Component, EventEmitter, input, Input, Output } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, EventEmitter, input, Input, Output, SimpleChange, SimpleChanges } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../button/button.component';
 import { InputComponent } from '../input/input.component';
 import { SelectComponent } from '../select/select.component';
 import { TextareaComponent } from '../textarea/textarea.component';
 import EditorAnnouncement from '../../../types/EditorAnnouncement';
-import { BORRADOR_STATUS, ENVIADO_STATUS } from '../../../const/const';
+import Announcement from '../../../types/Announcement';
 
 @Component({
   selector: 'app-announcements-editor',
@@ -16,56 +16,79 @@ import { BORRADOR_STATUS, ENVIADO_STATUS } from '../../../const/const';
     InputComponent,
     SelectComponent,
     TextareaComponent,
-    ButtonComponent
+    ButtonComponent,
+    ReactiveFormsModule
 ],
   templateUrl: './announcements-editor.component.html',
   styleUrl: './announcements-editor.component.css'
 })
 export class AnnouncementsEditorComponent {
   @Input() isEditorOpen = false;
+  @Input() error = false;
+  @Input() sent = false;
+  @Input() isEditing = false;
+  @Input() announcementToEdit: Announcement | null = null;   
   @Output() isEditorClose = new EventEmitter<void>();
-  @Output() announcementCreated = new EventEmitter();
-
-  sent = false;
-  borradorStatus = BORRADOR_STATUS;
-  enviadoStatus = ENVIADO_STATUS;
-
-  announcement: EditorAnnouncement = {
-    audience: '',
-    title: '',
-    message: '',
-    estatus: BORRADOR_STATUS
-  };
+  @Output() announcementCreated = new EventEmitter<EditorAnnouncement>();
+  @Output() announcementUpdated = new EventEmitter<EditorAnnouncement>();
+  @Output() resetEditor = new EventEmitter<void>();
+  form = new FormGroup({
+    sentTo: new FormControl('1', Validators.required),
+    title: new FormControl('', Validators.required),
+    message: new FormControl('', Validators.required)
+  });
 
   audienceOptions = [
-    { value: '1', label: 'Profesores' },
-    { value: '2', label: 'Alumnos' },
-    { value: '3', label: 'Administrativos' }
+    { value: 'TEACHER', label: 'Profesores' },
+    { value: 'STUDENT', label: 'Alumnos' },
+    { value: 'ADMIN', label: 'Administrativos' }
   ];
 
-  submitForm(form: NgForm, estatus: string) {
-    if (form.invalid) return;
-    //Llamada al servicio para guardar/enviar.
-    this.announcementCreated.emit({ ...this.announcement, estatus });
-    this.sent = true;
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['announcementToEdit'] && this.announcementToEdit && this.isEditing) {
+      this.populateForm();
+    }
   }
 
-  createNew(form: NgForm) {
-    form.reset();
-    this.sent = false;
+  private populateForm() {
+    if (this.announcementToEdit) {
+      this.form.patchValue({
+        sentTo: this.announcementToEdit.sentTo,
+        title: this.announcementToEdit.tittle,
+        message: this.announcementToEdit.message
+      });
+    }
   }
-  reset() {
-    this.sent = false;
-    this.announcement = { audience: '', title: '', message: '', estatus: BORRADOR_STATUS };
+  
+  submitForm(status: boolean) {
+    if (this.form.invalid){ 
+      this.form.markAllAsTouched();
+      console.error('Form is invalid', this.form.value);
+      return;
+    }
+    
+    const announcement: EditorAnnouncement = {
+      tittle: this.form.value.title!,
+      message: this.form.value.message!,
+      sentTo: this.form.value.sentTo!,
+      status
+    };
+
+    if (this.isEditing) {
+      this.announcementUpdated.emit(announcement);
+    } else {
+      this.announcementCreated.emit(announcement);
+    }
   }
 
-  openForm() {
-    this.isEditorOpen = true;
+  resetForm() {
+    this.form.reset();
+    this.resetEditor.emit();
   }
-
+  
   closeEditor() {
-    this.isEditorOpen = false;
     this.isEditorClose.emit();
-    this.reset();
+    this.resetEditor.emit();
+    this.form.reset();
   }
 }

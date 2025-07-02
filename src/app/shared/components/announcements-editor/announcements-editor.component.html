@@ -8,17 +8,23 @@
     @if (sent) {
     <div class="absolute inset-0 bg-white z-10 flex flex-col items-center justify-center gap-6 px-12 py-8">
         <button (click)="closeEditor()" class="absolute top-5 left-5 text-2xl font-bold hover:cursor-pointer">
-        <img src="/assets/icons/icon-close.svg" alt="close" class="w-6 h-6" />
+            <img src="/assets/icons/icon-close.svg" alt="close" class="w-6 h-6" />
         </button>
-        <img src="/assets/announcement-sent.svg" class="w-12 h-12" alt="éxito" />
-        <h1 class="text-2xl font-bold text-center text-radiance-950">Guardado con éxito</h1>
-        <app-button class="w-full max-w-sm" buttonText="Crear nuevo" color="blue" (onClick)="createNew(form)"></app-button>
+        @if (error) {
+            <img src="/assets/sad-face.svg" class="w-12 h-12" alt="éxito" />
+            <h1 class="text-2xl font-bold text-center text-tuna-900">¡Ah, ocurrió un error!</h1>
+        }
+        @else {
+            <img src="/assets/announcement-sent.svg" class="w-12 h-12" alt="éxito" />
+            <h1 class="text-2xl font-bold text-center text-radiance-950">Guardado con éxito</h1>
+        }
+        <app-button class="w-full max-w-sm" buttonText="Crear nuevo" color="blue" (onClick)="resetForm()"></app-button>
     </div>
     }
 
-    <form #form="ngForm" class="w-full h-full md:max-w-lg bg-white shadow-lg flex flex-col justify-between">
+    <form [formGroup]="form" class="w-full h-full md:max-w-lg bg-white shadow-lg flex flex-col justify-between">
         <div class="h-20 bg-radiance-50 flex justify-end items-center px-12">
-            <button type="button" (click)="submitForm(form, borradorStatus)"
+            <button type="button" (click)="submitForm(false)"
                 class="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-500">
                 <img src="/assets/symbols-save.svg" class="w-4 h-4" />
                 <span>Guardar</span>
@@ -30,7 +36,7 @@
             <div class="flex items-center gap-12">
                 <img src="/assets/owl.svg" class="w-24 h-24 p-6 bg-radiance-50 rounded-full" />
                 <div class="space-y-2">
-                    <h1 class="text-2xl font-bold">Crear nuevo anuncio</h1>
+                    <h1 class="text-2xl font-bold">{{ isEditing ? 'Editar Anuncio' : 'Crear Nuevo Anuncio' }}</h1>
                     <p class="text-base">
                         Se llevará a cabo una campaña de comunicación a través de correo electrónico dirigida a
                         todos los usuarios del tipo seleccionado.
@@ -38,15 +44,9 @@
                 </div>
             </div>
 
-
-            <app-select label="Dirigido a:" name="audience" [(model)]="announcement.audience"
-                [options]="audienceOptions"></app-select>
-
-            <app-input id="title" label="Título" name="title" type="text" placeholder="Registro disponible"
-                [(ngModel)]="announcement.title"></app-input>
-
-            <app-textarea label="Mensaje" name="message" [rows]="5"
-                [(ngModel)]="announcement.message"></app-textarea>
+            <app-select controlName="sentTo" label="Dirigido a:" name="audience" [options]="audienceOptions" />
+            <app-input controlName="title" id="title" label="Título" name="title" type="text" placeholder="Registro disponible" />
+            <app-textarea controlName="message" label="Mensaje" name="message" [rows]="5" controlName="message"/>
         </section>
 
         <div class="flex-none h-20 bg-radiance-50 flex justify-center items-center gap-8 px-12">
@@ -55,7 +55,7 @@
                 <img src="/assets/symbols-cancel.svg" class="w-4 h-4" />
                 <span>Cancelar</span>
             </button>
-            <button type="submit" [disabled]="form.invalid" (click)="submitForm(form, enviadoStatus)"
+            <button type="submit" (click)="submitForm(true)"
                 class="flex items-center gap-2 px-4 py-2 bg-blue-800 text-white rounded-md hover:bg-blue-700">
                 <img src="/assets/symbols-send.svg" class="w-4 h-4" />
                 <span>Enviar</span>

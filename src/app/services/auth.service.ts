@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { API_URL, TOKEN_KEY } from '../const/const'; 
+import { decodeToken, getUserFromToken, isTokenExpired, JwtPayload } from '../tools/jwt-utils'; 
 
 interface LoginRequest {  
   email: string;
